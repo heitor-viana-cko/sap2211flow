@@ -1,0 +1,127 @@
+<!-- FORM -->
+<ng-container *ngIf="paymentDetailsData">
+  <form (ngSubmit)="next()" [formGroup]="paymentForm">
+    <div class="row w-100">
+      <div class="col-md-12 col-xl-10">
+        <div class="form-group">
+          <label>
+            <span class="label-content">
+              {{'paymentForm.accountHolderName.label' | cxTranslate}}
+            </span>
+            <input
+              aria-required="true"
+              class="form-control"
+              type="text"
+              placeholder="{{'paymentForm.accountHolderName.placeholder' | cxTranslate}}"
+              formControlName="accountHolderName"
+            />
+            <cx-form-errors
+              aria-live="assertive"
+              aria-atomic="true"
+              [control]="$any(paymentForm.get('accountHolderName'))"
+            ></cx-form-errors>
+          </label>
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <span class="label-content">
+              {{'paymentForm.cardNumber' | cxTranslate}}
+            </span>
+            <input
+              aria-required="true"
+              type="text"
+              class="form-control"
+              [value]="paymentDetailsData.cardNumber"
+              readonly
+            />
+          </label>
+        </div>
+        
+        <div class="row">
+          <div class="form-group col-md-8">
+            <fieldset class="cx-payment-form-exp-date">
+              <legend class="label-content">
+                {{ 'paymentForm.expirationDate' | cxTranslate }}
+              </legend>
+              <label class="cx-payment-form-exp-date-wrapper">
+                <ng-select
+                  aria-required="true"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="months"
+                  placeholder="{{ 'paymentForm.monthMask' | cxTranslate }}"
+                  formControlName="expiryMonth"
+                  [attr.aria-label]="
+                    'paymentForm.expirationMonth'
+                      | cxTranslate
+                        : { selected: paymentForm.get('expiryMonth')?.value }
+                  "
+                >
+                </ng-select>
+                <cx-form-errors
+                  aria-live="assertive"
+                  aria-atomic="true"
+                  [control]="$any(paymentForm.get('expiryMonth'))"
+                ></cx-form-errors>
+              </label>
+              <label class="cx-payment-form-exp-date-wrapper">
+                <ng-select
+                  aria-required="true"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="years"
+                  placeholder="{{ 'paymentForm.yearMask' | cxTranslate }}"
+                  [attr.aria-label]="
+                    'paymentForm.expirationYear'
+                      | cxTranslate
+                        : { selected: paymentForm.get('expiryYear')?.value }
+                  "
+                  formControlName="expiryYear"
+                >
+                </ng-select>
+                <cx-form-errors
+                  aria-live="assertive"
+                  aria-atomic="true"
+                  [control]="$any(paymentForm.get('expiryYear'))"
+                ></cx-form-errors>
+              </label>
+            </fieldset>
+          </div>
+        </div>
+        
+        <div class="form-group" *ngIf="setAsDefaultField">
+          <div class="form-check">
+            <label>
+              <input
+                type="checkbox"
+                class="form-check-input"
+                (change)="toggleDefaultPaymentMethod()"
+              />
+              <span class="form-check-label">
+                {{'paymentForm.setAsDefault' | cxTranslate}}
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- BUTTON SECTION -->
+    <div class="cx-checkout-btns row">
+      <div class="col-md-12 col-lg-6">
+        <button
+          class="btn btn-block btn-secondary"
+          (click)="back()"
+        >
+          {{ 'common.back' | cxTranslate }}
+        </button>
+      </div>
+      <div class="col-md-12 col-lg-6">
+        <button class="btn btn-block btn-primary" type="submit">
+          {{ 'common.continue' | cxTranslate }}
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-container>

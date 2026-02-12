@@ -1,0 +1,56 @@
+%MultiStepCheckoutSummaryPageTemplate {
+  cx-page-slot {
+    &.SideContent {
+      lib-checkout-com-place-order{
+        padding-bottom: 0;
+        padding-top: 1rem;
+        flex: unset;
+        padding-inline: 2.5rem 0;
+
+        @include media-breakpoint-down(md) {
+          padding: 1rem 0 0;
+        }
+      }
+
+      cx-checkout-order-summary {
+        flex: unset;
+
+        lib-checkout-com-order-summary {
+          padding-bottom: 0;
+          padding-top: 1rem;
+          padding-inline: 2.5rem 0;
+
+          @include media-breakpoint-down(md) {
+            padding: 1rem 0 0;
+          }
+        }
+      }
+
+      @include media-breakpoint-down(md) {
+        cx-checkout-order-summary {
+          width: 50%;
+          padding-top: 1rem;
+
+          lib-checkout-com-order-summary {
+            padding: 1rem 2.5rem 0;
+
+            @include media-breakpoint-down(md) {
+              padding: 1rem 0 0;
+            }
+          }
+        }
+
+        lib-checkout-com-place-order {
+          max-width: 50%;
+          padding-bottom: 2rem;
+        }
+      }
+
+      @include media-breakpoint-down(sm) {
+        lib-checkout-com-place-order {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
+    "useDefineForClassFields": false,
+    "paths": {
+      "checkout-spartacus-connector": [
+        "dist/checkout-spartacus-connector"
+      ],
+      "checkout-spartacus-translations": [
+        "dist/checkout-spartacus-translations/checkout-spartacus-translations",
+        "dist/checkout-spartacus-translations"
+      ],
+      "@checkout-core/*": [
+        "projects/checkout-spartacus-connector/src/core/*"
+      ],
+      "@checkout-adapters/*": [
+        "projects/checkout-spartacus-connector/src/core/adapters/*"
+      ],
+      "@checkout-facades/*": [
+        "projects/checkout-spartacus-connector/src/core/facades/*"
+      ],
+      "@checkout-model/*": [
+        "projects/checkout-spartacus-connector/src/core/model/*"
+      ],
+      "@checkout-normalizers/*": [
+        "projects/checkout-spartacus-connector/src/core/normalizers/*"
+      ],
+      "@checkout-guards/*": [
+        "projects/checkout-spartacus-connector/src/guards/*"
+      ],
+      "@checkout-services/*": [
+        "projects/checkout-spartacus-connector/src/core/services/*"
+      ],
+      "@checkout-shared/*": [
+        "projects/checkout-spartacus-connector/src/core/shared/*"
+      ],
+      "@checkout-components/*": [
+        "projects/checkout-spartacus-connector/src/storefrontlib/cms-components/*"
+      ],
+      "@checkout-tests/*": [
+        "projects/checkout-spartacus-connector/src/tests/*"
+      ]
+    },
+  }
+}

@@ -1,0 +1,14 @@
+/* stylelint-disable value-keyword-case */
+
+/* You can add global styles to this file, and also import other style files */
+$page-template-allowlist: OrderConfirmationPageTemplate, MultiStepCheckoutSummaryPageTemplate !default;
+$checkout-components-allowlist: lib-checkout-com-payment-method, lib-checkout-com-order-detail-billing, lib-checkout-com-checkout-review-payment, lib-checkout-com-checkout-review-shipping, y-checkout-com-payment-methods !default;
+$order-details-allowlist: lib-checkout-com-order-detail-billing !default;
+$page-template-allowlist-multistep-checkout: MultiStepCheckoutSummaryPageTemplate !default;
+$cart-components-allowlist: lib-checkout-com-express-cart-totals, lib-checkout-com-order-summary !default;
+$order-overview-allowlist: lib-checkout-com-order-overview, cx-order-overview !default;
+$myaccount-components-allowlist: y-checkout-com-payment-methods !default;
+
+@import "./styles-config";
+@import "checkout-com/components/index";
+@import "checkout-com/templates/index";

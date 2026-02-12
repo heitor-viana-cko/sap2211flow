@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <alias name="defaultCheckoutComPaymentReferencePrepareInterceptor"
+           alias="checkoutComPaymentReferencePrepareInterceptor"/>
+    <bean id="defaultCheckoutComPaymentReferencePrepareInterceptor"
+          class="com.checkout.hybris.core.order.interceptors.CheckoutComPaymentReferencePrepareInterceptor">
+        <constructor-arg ref="checkoutComPaymentReferenceGenerationStrategy"/>
+    </bean>
+
+    <alias name="defaultCheckoutComAddressInterceptor"
+           alias="checkoutComAddressInterceptor"/>
+    <bean id="defaultCheckoutComAddressInterceptor"
+          class="com.checkout.hybris.core.address.interceptors.CheckoutComAddressInterceptor"/>
+
+    <alias name="defaultCheckoutComPaymentReferenceValidateInterceptor"
+           alias="checkoutComPaymentReferenceValidateInterceptor"/>
+    <bean id="defaultCheckoutComPaymentReferenceValidateInterceptor"
+          class="com.checkout.hybris.core.order.interceptors.CheckoutComPaymentReferenceValidateInterceptor"/>
+
+    <bean id="checkoutComPaymentReferencePrepareInterceptorMapping"
+          class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+        <property name="interceptor" ref="checkoutComPaymentReferencePrepareInterceptor"/>
+        <property name="typeCode" value="Cart"/>
+    </bean>
+
+    <bean id="checkoutComPaymentReferenceValidateInterceptorMapping"
+          class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+        <property name="interceptor" ref="checkoutComPaymentReferenceValidateInterceptor"/>
+        <property name="typeCode" value="Cart"/>
+    </bean>
+
+    <bean id="checkoutComAddressValidateInterceptorMapping"
+          class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+        <property name="interceptor" ref="checkoutComAddressInterceptor"/>
+        <property name="typeCode" value="Address"/>
+    </bean>
+
+</beans>

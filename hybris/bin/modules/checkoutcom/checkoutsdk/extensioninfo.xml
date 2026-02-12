@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+        
+    <extension abstractclassprefix="Generated" classprefix="Checkoutsdk" jaloLogicFree="true" managername="CheckoutsdkManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="checkoutsdk" usemaven="false">
+                
+        <coremodule generated="true" manager="com.checkout.jalo.CheckoutsdkManager" packageroot="com.checkout"/>
+            
+    </extension>
+    
+</extensioninfo>

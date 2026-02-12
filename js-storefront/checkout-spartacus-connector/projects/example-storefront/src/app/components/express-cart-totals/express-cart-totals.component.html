@@ -1,0 +1,38 @@
+<cx-progress-button
+  (clickEvent)="disableButtonWhileNavigation()"
+  [class]="'btn btn-primary btn-block'"
+  [disabled]="cartValidationInProgress"
+  [loading]="cartValidationInProgress"
+  [routerLink]="{ cxRoute: 'checkout' } | cxUrl"
+  tabindex="-1"
+>
+  {{
+    (cartValidationInProgress
+        ? 'validation.inProgress'
+        : 'cartDetails.proceedToCheckout'
+    ) | cxTranslate
+  }}
+</cx-progress-button>
+
+<div>
+  <div class="my-3 text-center d-flex justify-content-around">
+    <div class="d-flex align-items-center">
+      <span class="border d-inline-block" style="height: 1px; width: 40px;"></span>
+      <span class="mx-2">{{"paymentPdp.payDirectly" | cxTranslate}}</span>
+      <span class="border d-inline-block" style="height: 1px; width: 40px;"></span>
+    </div>
+  </div>
+  <ng-container *ngIf="applePay">
+    <lib-checkout-com-express-applepay class="my-3"></lib-checkout-com-express-applepay>
+
+    <div class="my-3 text-center d-flex justify-content-around">
+      <div class="d-flex align-items-center">
+        <span class="border d-inline-block" style="height: 1px; width: 40px;"></span>
+        <span class="mx-2">{{"paymentPdp.or" | cxTranslate}}</span>
+        <span class="border d-inline-block" style="height: 1px; width: 40px;"></span>
+      </div>
+    </div>
+  </ng-container>
+
+  <lib-checkout-com-express-googlepay class="my-3"></lib-checkout-com-express-googlepay>
+</div>

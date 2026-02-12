@@ -1,0 +1,29 @@
+<div
+  class="cx-modal-container"
+  role="dialog"
+  aria-labelledby="dialogTitle"
+>
+  <div class="cx-modal-content">
+    <div class="cx-dialog-header modal-header">
+      <div class="cx-dialog-title modal-title">
+        {{ 'paymentForm.achConsents.popUpTitle' | cxTranslate }}
+      </div>
+      <button
+        type="button"
+        [attr.aria-label]="'common.close' | cxTranslate"
+        class="close"
+        tabindex="-1"
+        (click)="close()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="cx-dialog-body modal-body">
+      <div class="container">
+        <p>{{ 'paymentForm.achConsents.popupText' | cxTranslate }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+

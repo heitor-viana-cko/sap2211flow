@@ -1,0 +1,30 @@
+<div
+  class="cx-modal-container"
+  role="dialog"
+  aria-labelledby="dialogTitle"
+>
+  <div class="cx-modal-content">
+    <div class="cx-dialog-header modal-header">
+      <div class="cx-dialog-title modal-title">
+        {{ 'checkoutReview.flowPopup.title' | cxTranslate }}
+      </div>
+      <button
+        type="button"
+        [attr.aria-label]="'common.close' | cxTranslate"
+        class="close"
+        tabindex="-1"
+        (click)="close()"
+        *ngIf="(disableModalActions() | async) !== true"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="cx-dialog-body modal-body">
+      <div class="container">
+        <lib-checkout-com-flow></lib-checkout-com-flow>
+      </div>
+    </div>
+  </div>
+</div>
+
+

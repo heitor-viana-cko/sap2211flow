@@ -1,0 +1,29 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { NgModule } from '@angular/core';
+import { importExportTranslationChunksConfig, importExportTranslations } from '@spartacus/cart/import-export/assets';
+import { CART_IMPORT_EXPORT_FEATURE, ImportExportRootModule } from '@spartacus/cart/import-export/root';
+import { CmsConfig, I18nConfig, provideConfig } from '@spartacus/core';
+
+@NgModule({
+  declarations: [],
+  imports: [
+    ImportExportRootModule
+  ],
+  providers: [provideConfig(<CmsConfig>{
+    featureModules: {
+      [CART_IMPORT_EXPORT_FEATURE]: {
+        module: () =>
+          // eslint-disable-next-line @typescript-eslint/typedef
+          import('@spartacus/cart/import-export').then((m) => m.ImportExportModule),
+      },
+    }
+  }),
+  provideConfig(<I18nConfig>{
+    i18n: {
+      resources: importExportTranslations,
+      chunks: importExportTranslationChunksConfig,
+    },
+  })
+  ]
+})
+export class CartImportExportFeatureModule { }

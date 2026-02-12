@@ -1,0 +1,18 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundCheckoutApplePay   ; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]              ; type(code)                       ; root[default = false]; itemTypeMatch(code)
+; InboundCheckoutApplePay                                  ; ApplePayMerchantCapabilities     ; ApplePayMerchantCapabilities                          ;                                                      ; ALL_SUBTYPES
+; InboundCheckoutApplePay                                  ; ApplePaySupportedNetworks        ; ApplePaySupportedNetworks                             ;                                                      ; ALL_SUBTYPES
+; InboundCheckoutApplePay                                  ; CheckoutComApplePayConfiguration ; CheckoutComApplePayConfiguration                      ; true                                                 ; ALL_SUB_AND_SUPER_TYPES
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier)   ; returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; InboundCheckoutApplePay:ApplePayMerchantCapabilities     ; code                             ; ApplePayMerchantCapabilities:code                     ;                                                      ; true ;
+; InboundCheckoutApplePay:ApplePaySupportedNetworks        ; code                             ; ApplePaySupportedNetworks:code                        ;                                                      ; true ;
+; InboundCheckoutApplePay:CheckoutComApplePayConfiguration ; countryCode                      ; CheckoutComApplePayConfiguration:countryCode          ;                                                      ;      ;
+; InboundCheckoutApplePay:CheckoutComApplePayConfiguration ; supportedNetworks                ; CheckoutComApplePayConfiguration:supportedNetworks    ; InboundCheckoutApplePay:ApplePaySupportedNetworks    ;      ;
+; InboundCheckoutApplePay:CheckoutComApplePayConfiguration ; merchantId                       ; CheckoutComApplePayConfiguration:merchantId           ;                                                      ;      ;
+; InboundCheckoutApplePay:CheckoutComApplePayConfiguration ; merchantName                     ; CheckoutComApplePayConfiguration:merchantName         ;                                                      ;      ;
+; InboundCheckoutApplePay:CheckoutComApplePayConfiguration ; privateKey                       ; CheckoutComApplePayConfiguration:privateKey           ;                                                      ;      ;
+; InboundCheckoutApplePay:CheckoutComApplePayConfiguration ; merchantCapabilities             ; CheckoutComApplePayConfiguration:merchantCapabilities ; InboundCheckoutApplePay:ApplePayMerchantCapabilities ;      ;
+; InboundCheckoutApplePay:CheckoutComApplePayConfiguration ; certificate                      ; CheckoutComApplePayConfiguration:certificate          ;                                                      ; true ;

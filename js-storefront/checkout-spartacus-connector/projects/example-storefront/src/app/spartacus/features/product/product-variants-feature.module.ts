@@ -1,0 +1,29 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { NgModule } from '@angular/core';
+import { CmsConfig, I18nConfig, provideConfig } from '@spartacus/core';
+import { productVariantsTranslationChunksConfig, productVariantsTranslations } from '@spartacus/product/variants/assets';
+import { PRODUCT_VARIANTS_FEATURE, ProductVariantsRootModule } from '@spartacus/product/variants/root';
+
+@NgModule({
+  declarations: [],
+  imports: [
+    ProductVariantsRootModule
+  ],
+  providers: [provideConfig(<CmsConfig>{
+    featureModules: {
+      [PRODUCT_VARIANTS_FEATURE]: {
+        module: () =>
+          // eslint-disable-next-line @typescript-eslint/typedef
+          import('@spartacus/product/variants').then((m) => m.ProductVariantsModule),
+      },
+    }
+  }),
+  provideConfig(<I18nConfig>{
+    i18n: {
+      resources: productVariantsTranslations,
+      chunks: productVariantsTranslationChunksConfig,
+    },
+  })
+  ]
+})
+export class ProductVariantsFeatureModule { }

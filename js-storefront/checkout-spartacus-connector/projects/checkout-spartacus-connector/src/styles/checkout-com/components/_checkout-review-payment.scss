@@ -1,0 +1,148 @@
+// TODO: Remove if not needed
+// %,
+// %cx-checkout-review-overview,
+// %cx-order-confirmation-shipping
+%lib-checkout-com-checkout-review-shipping,
+%lib-checkout-com-checkout-review-payment {
+  @include media-breakpoint-down(md) {
+    background-color: var(--cx-color-inverse);
+  }
+
+  .cx-review-header {
+    margin: 10px 0 20px;
+    padding: 20px 40px;
+    background-color: var(--cx-color-background);
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .cx-review-summary {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--cx-color-inverse);
+
+    @include media-breakpoint-up(lg) {
+      margin-top: 1.5rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 32px;
+      padding: 0;
+      flex-direction: column;
+    }
+
+    &-wrapper {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      word-break: break-all;
+    }
+
+    &-edit-step {
+      padding: 0 20px 20px;
+
+      @include media-breakpoint-down(md) {
+        padding: 10px 0 0;
+      }
+    }
+
+    .cx-review-summary-payment-card {
+      width: 45%;
+      margin: 30px;
+      flex-grow: 1;
+      border: 1px solid var(--cx-color-medium);
+      border-radius: 10px;
+      background-color: theme-color('inverse');
+
+      @include media-breakpoint-up(md) {
+        &:first-child {
+          margin-bottom: 40px;
+          margin-top: 30px;
+          margin-inline: 0 15px;
+        }
+
+        &:last-child {
+          margin-bottom: 40px;
+          margin-top: 30px;
+          margin-inline: 15px 0;
+        }
+      }
+
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+        margin-bottom: 0;
+        margin-top: 0;
+        margin-inline: 0 0;
+      }
+    }
+
+    .cx-review-summary-card-container {
+      width: 45%;
+      flex-grow: 1;
+      border: 1px solid var(--cx-color-medium);
+      border-radius: 10px;
+
+      @include media-breakpoint-up(md) {
+        &:first-child {
+          margin-bottom: 40px;
+          margin-top: 0;
+          margin-inline: 0 15px;
+        }
+
+        &:last-child {
+          margin-bottom: 40px;
+          margin-top: 0;
+          margin-inline: 15px 0;
+        }
+      }
+
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+        margin-bottom: 20px;
+        margin-top: 0;
+        margin-inline: 0 0;
+      }
+    }
+
+    .cx-review-summary-card {
+      display: flex;
+      justify-content: space-between;
+
+      @include media-breakpoint-down(sm) {
+        &:first-child {
+          margin-bottom: 20px;
+        }
+      }
+
+      .cx-card-title {
+        @include type('4');
+
+        margin-bottom: 0.5rem;
+        font-weight: var(--cx-font-weight-bold);
+      }
+
+      .cx-card-paragraph-title {
+        font-style: italic;
+      }
+
+      .cx-review-summary-edit-step {
+        padding: 20px;
+        align-self: flex-start;
+        font-size: $h4-font-size;
+      }
+    }
+  }
+
+  .cx-review-shipping-summary {
+    background-color: var(--cx-color-inverse);
+  }
+
+  .cx-review-cart-total {
+    @include type('4');
+
+    margin: 2rem 0 0.5rem;
+  }
+}

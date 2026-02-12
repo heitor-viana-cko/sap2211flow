@@ -1,0 +1,51 @@
+$spaSiteUid = electronics-spa
+$productCatalog=electronicsProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+# Merchant keys
+"#% if: de.hybris.platform.jalo.extension.ExtensionManager.getInstance().isExtensionInstalled(""spartacussampledata"")"
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$secretKey = $config-checkout.nas.secret.key
+$publicKey = $config-checkout.nas.public.key
+$privateSharedKey = $config-checkout.private.shared.key
+$nasSecretKey =   $config-checkout.nas.secret.key
+$processingChannelId = $config-checkout.flow.processing.channel.id
+$nasPublicKey =   $config-checkout.nas.public.key
+$nasSignatureKey = $config-checkout.nas.signature.key
+$applePayCertificate = $config-checkout.applepay.certificate
+$applePayPrivateKey = $config-checkout.applepay.privatekey
+$spartacusUrlPath = $config-checkout.spartacus.url.path
+$nasAuthorizationHeaderKey = $config-checkout.nas.authorization.header.key
+
+# Klarna configuration
+INSERT_UPDATE CheckoutComKlarnaConfiguration; &klarnaConfigurationId; instanceId[unique = true]
+                                            ; klarnaConfig          ; e2yCheckoutCom
+
+INSERT_UPDATE CheckoutComApplePayConfiguration; &applePayConfigurationId; certificate[unique = true]; privateKey          ; supportedNetworks(code)                                                                                                                  ; countryCode; merchantCapabilities(code)                              ; merchantId                        ; merchantName
+                                              ; applePayConfig          ; $applePayCertificate      ; $applePayPrivateKey ; amex, cartesBancaires, chinaUnionPay, discover, eftpos, electron, elo, interac, jcb, mada, maestro, masterCard, privateLabel, visa, vPay ; GB         ; supportsCredit, supportsDebit, supports3DS, supportsEMV ; merchant.com.checkout.sandbox.e2y ; e2yCheckoutCom
+
+INSERT_UPDATE CheckoutComGooglePayConfiguration; &googlePayConfigurationId; merchantId[unique = true]; merchantName   ; environment(code); type ; gateway     ; gatewayMerchantId; allowedCardNetworks(code)                      ; allowedCardAuthMethods(code); threeDSEnabled[default = true]
+                                               ; googlePayConfig          ; 01234567890123456789     ; e2yCheckoutCom ; test             ; CARD ; checkoutltd ; $publicKey       ; AMEX, DISCOVER, INTERAC, JCB, MASTERCARD, VISA ; PAN_ONLY, CRYPTOGRAM_3DS ;
+
+INSERT_UPDATE CheckoutComMerchantConfiguration; code[unique = true]               ; applePayConfiguration(&applePayConfigurationId); googlePayConfiguration(&googlePayConfigurationId); klarnaConfiguration(&klarnaConfigurationId)
+                                              ; merchantConfiguration-$spaSiteUid ; applePayConfig                                 ; googlePayConfig                                  ; klarnaConfig
+
+# Merchant configuration
+INSERT_UPDATE CheckoutComMerchantConfiguration; code[unique = true]               ; channelProcessingId;secretKey  ; publicKey  ; privateSharedKey  ; nasSecretKey  ; nasPublicKey  ; nasSignatureKey  ; nasAuthorisationHeaderKey  ; environment(code); paymentAction(code)   ; reviewTransactionsAtRisk; klarnaConfiguration(&klarnaConfigurationId); authorisationAmountValidationThreshold; threeDSEnabled; noThreeDSAttempt; checkoutComPaymentEventTypes(code)                                                                                                                                                       ; includeBillingDescriptor; billingDescriptorName; billingDescriptorCity; achConfiguration(code)
+                                              ; merchantConfiguration-$spaSiteUid ;$processingChannelId; $nasSecretKey ; $nasPublicKey ; $privateSharedKey ; $nasSecretKey ; $nasPublicKey ; $nasSignatureKey ; $nasAuthorizationHeaderKey ; test ; authorize_and_capture ; true ; klarnaConfig ; 0.01 ; true ; true ; payment_approved, payment_voided, payment_void_declined, payment_captured, payment_capture_declined, payment_refunded, payment_refund_declined, payment_pending, payment_declined, payment_expired, payment_canceled, payment_capture_pending, payment_returned ; true                    ; $spaSiteUid          ; INTERNET             ; checkoutComACHConfiguration-spa
+
+INSERT_UPDATE CheckoutComMerchantConfiguration; code[unique = true]               ; useNasAuthorisationKeyOnNotifications; useNasSignatureKeyOnNotifications;
+                                              ; merchantConfiguration-$spaSiteUid ; true                                 ; true                             ;
+
+INSERT_UPDATE CheckoutComACHConfiguration; code[unique = true]             ; clientId                 ; clientName ; linkCustomizationName ; redirectUri ; name ; language(isocode); secret                         ; webhook
+                                         ; checkoutComACHConfiguration-spa ; 633c9e89e1ed9800145f7eb0 ; clientName ; linkCustomizationName ; redirectUri ; name ; en               ; 4baea7b2675964b0195f5cfc4703d7 ; webhook
+
+# Set merchant configuration and payment redirect urls to the site
+UPDATE BaseSite; uid[unique = true]; checkoutComMerchantConfiguration(code); checkoutComSuccessRedirectUrl                        ; checkoutComFailureRedirectUrl
+               ; $spaSiteUid       ; merchantConfiguration-$spaSiteUid     ; $spartacusUrlPath/order-confirmation?authorized=true ; $spartacusUrlPath/order-confirmation?authorized=false
+
+# Spartacus sets electronics store tax group to US taxes. This creates the relation between the tax group and the tax.
+INSERT_UPDATE TaxRow;$catalogVersion;tax(code)[unique=true];pg(code)[unique=true];ug(code)[unique=true]
+                    ;;jp-vat-full;jp-vat-full;us-taxes
+
+#% endif:

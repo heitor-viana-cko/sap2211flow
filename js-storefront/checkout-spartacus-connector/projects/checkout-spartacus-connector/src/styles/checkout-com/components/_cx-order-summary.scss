@@ -1,0 +1,63 @@
+%lib-checkout-com-order-summary{
+  margin: 0;
+  padding-bottom: 0;
+  padding-top: 16px;
+  display: block;
+  padding-inline: 15px 15px;
+
+  .cx-summary-heading {
+    padding-bottom: 1.625rem;
+    border-bottom: 1px solid var(--cx-color-medium);
+    font-weight: var(--cx-font-weight-semi);
+    text-transform: capitalize;
+    // TODO: (CXSPA-5987) Remove the following propery next major release
+    @include type('3');
+
+    @include media-breakpoint-down(md) {
+      margin-bottom: 0.438rem;
+      padding-bottom: 0.938rem;
+    }
+  }
+
+  .cx-summary-label {
+    padding: 0;
+    text-align: start;
+  }
+
+  .cx-summary-amount {
+    padding: 0;
+    text-align: end;
+  }
+
+  .cx-summary-row {
+    padding: 0.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .cx-summary-savings {
+    color: var(--cx-color-success);
+  }
+
+  .cx-summary-total {
+    font-weight: var(--cx-font-weight-bold);
+  }
+
+  .cx-coupon-code-pill {
+    margin-bottom: 5px;
+    margin-top: 10px;
+    padding-bottom: 7px;
+    padding-top: 7px;
+    display: inline-flex;
+    align-items: flex-start;
+    border-radius: 4px;
+    background: var(--cx-g-color-light);
+    word-break: break-all;
+    padding-inline: 13px 15px;
+    margin-inline: 0 10px;
+  }
+
+  .cx-coupon-code--pill-value {
+    line-height: 1.7;
+  }
+}

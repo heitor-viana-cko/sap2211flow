@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:annotation-config/>
+
+    <alias name="defaultCheckoutComPaymentFacade" alias="checkoutComPaymentFacade"/>
+    <bean id="defaultCheckoutComPaymentFacade"
+          class="com.checkout.hybris.facades.payment.impl.DefaultCheckoutComPaymentFacade"
+          parent="defaultPaymentFacade">
+        <constructor-arg name="cartService" ref="cartService"/>
+        <constructor-arg name="checkoutComPaymentIntegrationService"
+                         ref="checkoutComPaymentIntegrationService"/>
+        <constructor-arg name="checkoutComMerchantConfigurationService"
+                         ref="checkoutComMerchantConfigurationService"/>
+        <constructor-arg name="checkoutComCertificateService"
+                         ref="checkoutComCertificateService"/>
+        <constructor-arg name="checkoutComMappedPaymentTokenRequestConverter"
+                         ref="checkoutComMappedPaymentTokenRequestConverter"/>
+        <constructor-arg name="configurationService" ref="configurationService"/>
+    </bean>
+
+    <alias name="defaultCheckoutComPaymentInfoFacade" alias="checkoutComPaymentInfoFacade"/>
+    <bean id="defaultCheckoutComPaymentInfoFacade"
+          class="com.checkout.hybris.facades.payment.impl.DefaultCheckoutComPaymentInfoFacade">
+        <constructor-arg name="cartService" ref="cartService"/>
+        <constructor-arg name="paymentInfoService" ref="paymentInfoService"/>
+        <constructor-arg name="checkoutComCCPaymentInfoReverseConverter"
+                         ref="checkoutComCCPaymentInfoReverseConverter"/>
+        <constructor-arg name="checkoutComPaymentTypeResolver" ref="checkoutComPaymentTypeResolver"/>
+        <constructor-arg name="checkoutComApmMappedPaymentInfoReverseConverter"
+                         ref="checkoutComApmMappedPaymentInfoReverseConverter"/>
+        <constructor-arg name="checkoutComUpdatePaymentInfoStrategyMapper"
+                         ref="checkoutComUpdatePaymentInfoStrategyMapper"/>
+    </bean>
+
+    <alias name="defaultCheckoutComMerchantConfigurationFacade" alias="checkoutComMerchantConfigurationFacade"/>
+    <bean id="defaultCheckoutComMerchantConfigurationFacade"
+          class="com.checkout.hybris.facades.merchant.impl.DefaultCheckoutComMerchantConfigurationFacade">
+        <constructor-arg name="checkoutComMerchantConfigurationService" ref="checkoutComMerchantConfigurationService"/>
+        <constructor-arg name="checkoutComApplePaySettingsDataConverter"
+                         ref="checkoutComApplePaySettingsDataConverter"/>
+        <constructor-arg name="checkoutComGooglePaySettingsDataConverter"
+                         ref="checkoutComGooglePaySettingsDataConverter"/>
+    </bean>
+
+    <alias name="checkoutComDefaultOmsOrderFacade" alias="omsOrderFacade"/>
+    <bean id="checkoutComDefaultOmsOrderFacade"
+          class="com.checkout.hybris.facades.ordermanagement.impl.CheckoutComDefaultOmsOrderFacade"
+          parent="defaultOmsOrderFacade"/>
+
+    <alias name="defaultCheckoutComAPMAvailabilityFacade" alias="checkoutComAPMAvailabilityFacade"/>
+    <bean id="defaultCheckoutComAPMAvailabilityFacade"
+          class="com.checkout.hybris.facades.apm.impl.DefaultCheckoutComAPMConfigurationFacade">
+        <constructor-arg name="checkoutComAPMConfigurationService" ref="checkoutComAPMConfigurationService"/>
+        <constructor-arg name="checkoutComAPMConfigurationConverter" ref="checkoutComAPMConfigurationConverter"/>
+    </bean>
+
+    <alias name="defaultCheckoutComAbstractCheckoutFlowFacadeDecorator"
+           alias="checkoutComAbstractCheckoutFlowFacadeDecorator"/>
+    <bean id="defaultCheckoutComAbstractCheckoutFlowFacadeDecorator"
+          class="com.checkout.hybris.facades.accelerator.impl.CheckoutComAbstractCheckoutFlowFacadeDecorator"
+          abstract="true"
+          parent="defaultCheckoutFacade">
+    </bean>
+
+    <alias name="defaultCheckoutComCheckoutFlowFacadeDecorator" alias="checkoutFlowFacade"/>
+    <bean class="com.checkout.hybris.facades.accelerator.impl.DefaultCheckoutComCheckoutFlowFacadeDecorator"
+          id="defaultCheckoutComCheckoutFlowFacadeDecorator" parent="checkoutComAbstractCheckoutFlowFacadeDecorator">
+        <constructor-arg name="checkoutFlowFacade" ref="defaultCheckoutFlowFacade"/>
+        <constructor-arg name="addressService" ref="addressService"/>
+        <constructor-arg name="checkoutComRequestFactory" ref="checkoutComRequestFactory"/>
+        <constructor-arg name="checkoutComPaymentIntegrationService" ref="checkoutComPaymentIntegrationService"/>
+        <constructor-arg name="paymentInfoService" ref="paymentInfoService"/>
+        <constructor-arg name="paymentService" ref="paymentService"/>
+        <constructor-arg name="authorizeResponseConverter" ref="authorizeResponseConverter"/>
+    </bean>
+
+    <alias name="defaultCheckoutComApmPaymentInfoPopulatorMapper" alias="checkoutComApmPaymentInfoPopulatorMapper"/>
+    <bean id="defaultCheckoutComApmPaymentInfoPopulatorMapper"
+          class="com.checkout.hybris.facades.payment.info.mappers.CheckoutComApmPaymentInfoPopulatorMapper">
+        <constructor-arg name="checkoutComDefaultApmPaymentInfoPopulator"
+                         ref="checkoutComDefaultApmPaymentInfoPopulator"/>
+    </bean>
+
+    <alias name="defaultCheckoutComAddressFacade" alias="checkoutComAddressFacade"/>
+    <bean id="defaultCheckoutComAddressFacade"
+          class="com.checkout.hybris.facades.address.impl.DefaultCheckoutComAddressFacade">
+        <constructor-arg name="addressService" ref="addressService"/>
+        <constructor-arg name="addressConverter" ref="addressConverter"/>
+        <constructor-arg name="addressReversePopulator" ref="addressReversePopulator"/>
+        <constructor-arg name="cartService" ref="cartService"/>
+        <constructor-arg name="checkoutFlowFacade" ref="checkoutFlowFacade"/>
+        <constructor-arg name="i18NFacade" ref="i18NFacade"/>
+        <constructor-arg name="modelService" ref="modelService"/>
+        <constructor-arg name="userService" ref="userService"/>
+    </bean>
+
+    <alias name="defaultCheckoutComWalletOrderFacade" alias="checkoutComWalletOrderFacade"/>
+    <bean id="defaultCheckoutComWalletOrderFacade"
+          class="com.checkout.hybris.facades.payment.wallet.impl.DefaultCheckoutComWalletOrderFacade">
+        <constructor-arg name="checkoutComPaymentFacade" ref="checkoutComPaymentFacade"/>
+        <constructor-arg name="checkoutComPaymentInfoFacade" ref="checkoutComPaymentInfoFacade"/>
+        <constructor-arg name="checkoutFlowFacade" ref="checkoutFlowFacade"/>
+        <constructor-arg name="cartFacade" ref="cartFacade"/>
+    </bean>
+
+    <alias name="defaultCheckoutComApplePayFacade" alias="checkoutComApplePayFacade"/>
+    <bean id="defaultCheckoutComApplePayFacade"
+          class="com.checkout.hybris.facades.payment.wallet.impl.DefaultCheckoutComApplePayFacade">
+        <constructor-arg name="checkoutComMerchantConfigurationFacade" ref="checkoutComMerchantConfigurationFacade"/>
+        <constructor-arg name="checkoutComApplePayToValidateMerchantConverter"
+                         ref="checkoutComApplePayToValidateMerchantConverter"/>
+        <constructor-arg name="checkoutComDeliveryModeDataToApplePayShippingMethodConverter"
+                         ref="checkoutComApplePayDeliveryModeToApplePayShippingMethodConverter"/>
+        <constructor-arg name="checkoutComPaymentFacade" ref="checkoutComPaymentFacade"/>
+        <constructor-arg name="cartFacade" ref="cartFacade"/>
+        <constructor-arg name="checkoutComCheckoutFlowFacade" ref="checkoutFlowFacade"/>
+    </bean>
+
+    <alias name="defaultCheckoutComWalletAddressFacade" alias="checkoutComWalletAddressFacade"/>
+    <bean id="defaultCheckoutComWalletAddressFacade"
+          class="com.checkout.hybris.facades.address.impl.DefaultCheckoutComWalletAddressFacade">
+        <constructor-arg name="checkoutComGooglePayAddressReverseConverter"
+                         ref="checkoutComGooglePayAddressReverseConverter"/>
+        <constructor-arg name="checkoutComApplePayAddressReverseConverter"
+                         ref="checkoutComApplePayAddressReverseConverter"/>
+        <constructor-arg name="checkoutCustomerStrategy" ref="checkoutCustomerStrategy"/>
+        <constructor-arg name="checkoutComAddressFacade" ref="checkoutComAddressFacade"/>
+        <constructor-arg name="userFacade" ref="userFacade"/>
+        <constructor-arg name="checkoutFacade" ref="checkoutFacade"/>
+    </bean>
+
+    <alias name="defaultCheckoutComGooglePayFacade" alias="checkoutComGooglePayFacade"/>
+    <bean id="defaultCheckoutComGooglePayFacade"
+          class="com.checkout.hybris.facades.payment.google.impl.DefaultCheckoutComGooglePayFacade">
+        <constructor-arg name="checkoutComMerchantConfigurationFacade" ref="checkoutComMerchantConfigurationFacade"/>
+        <constructor-arg name="cartService" ref="cartService"/>
+        <constructor-arg name="cartFacade" ref="cartFacade"/>
+        <constructor-arg name="checkoutComCheckoutFlowFacade" ref="checkoutFlowFacade"/>
+        <constructor-arg name="checkoutComGooglePayConversionFacade" ref="checkoutComGooglePayConversionFacade"/>
+        <constructor-arg name="deliveryService" ref="deliveryService"/>
+        <constructor-arg name="checkoutComWalletAddressFacade" ref="checkoutComWalletAddressFacade"/>
+    </bean>
+
+    <alias name="defaultCheckoutComKlarnaFacade" alias="checkoutComKlarnaFacade"/>
+    <bean id="defaultCheckoutComKlarnaFacade"
+          class="com.checkout.hybris.facades.payment.klarna.impl.DefaultCheckoutComKlarnaFacade">
+        <constructor-arg name="checkoutComPaymentIntegrationService"
+                         ref="checkoutComPaymentIntegrationService"/>
+        <constructor-arg name="checkoutComKlarnaSessionRequestDtoConverter"
+                         ref="checkoutComKlarnaSessionRequestDtoConverter"/>
+        <constructor-arg name="cartService" ref="cartService"/>
+        <constructor-arg name="checkoutComMerchantConfigurationService"
+                         ref="checkoutComMerchantConfigurationService"/>
+    </bean>
+
+    <alias name="defaultCheckoutComCustomerFacade" alias="customerFacade"/>
+    <bean id="defaultCheckoutComCustomerFacade"
+          class="com.checkout.hybris.facades.customer.impl.DefaultCheckoutComCustomerFacade"
+          parent="defaultCustomerFacade">
+        <constructor-arg name="commerceCartCalculationStrategy"
+                         ref="checkoutCartCalculationStrategy"/>
+    </bean>
+
+    <alias name="defaultCheckoutComGooglePayConversionFacade"
+           alias="checkoutComGooglePayConversionFacade"/>
+    <bean id="defaultCheckoutComGooglePayConversionFacade"
+          class="com.checkout.hybris.facades.conversion.impl.DefaultCheckoutComGooglePayConversionFacade">
+        <constructor-arg name="checkoutComGooglePayPaymentRequestConverter"
+                         ref="checkoutComGooglePayPaymentRequestConverter"/>
+        <constructor-arg name="checkoutComGooglePayTransactionInfoConverter"
+                         ref="checkoutComGooglePayTransactionInfoConverter"/>
+        <constructor-arg name="checkoutComGooglePayDeliveryModeToSelectionOptionConverter"
+                         ref="checkoutComGooglePayDeliveryModeToSelectionOptionConverter"/>
+    </bean>
+
+
+    <alias name="defaultCheckoutComUserFacade" alias="checkoutComUserFacade"/>
+    <bean class="com.checkout.hybris.commercefacades.user.impl.DefaultCheckoutComUserFacade"
+          id="defaultCheckoutComUserFacade">
+        <constructor-arg name="cardPaymentInfoReversePopulator" ref="cardPaymentInfoReversePopulator"/>
+        <constructor-arg name="userFacade" ref="userFacade"/>
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="checkoutComCustomerAccountServiceAdapter"
+                         ref="checkoutComCustomerAccountServiceAdapter"/>
+        <constructor-arg name="checkoutComMerchantConfigurationService" ref="checkoutComMerchantConfigurationService"/>
+    </bean>
+
+    <alias name="defaultCheckoutComPlaidLinkFacade" alias="checkoutComPlaidLinkFacade"/>
+    <bean id="defaultCheckoutComPlaidLinkFacade"
+          class="com.checkout.hybris.facades.payment.plaidlink.impl.DefaultCheckoutComPlaidLinkFacade">
+        <constructor-arg name="cartService" ref="cartService"/>
+        <constructor-arg name="checkoutComPlaidLinkService"
+                         ref="checkoutComPlaidLinkService"/>
+        <constructor-arg name="publicTokenExchangeResponseToAchBankInfoDetailConverter"
+                         ref="checkoutComPublicTokenExchangeResponseToAchBankInfoDetailConverter"/>
+    </bean>
+
+    <alias name="defaultCheckoutComACHConsentFacade" alias="checkoutComACHConsentFacade"/>
+    <bean id="defaultCheckoutComACHConsentFacade"
+          class="com.checkout.hybris.facades.payment.impl.DefaultCheckoutComACHConsentFacade">
+        <constructor-arg name="checkoutComACHConsentService" ref="checkoutComACHConsentService"/>
+        <constructor-arg name="checkoutComAchConsentReverseConverter" ref="checkoutComAchConsentReverseConverter"/>
+    </bean>
+
+    <alias name="defaultCheckoutComACHConsentPlaceOrderHook" alias="checkoutComACHConsentPlaceOrderHook"/>
+    <bean name="defaultCheckoutComACHConsentPlaceOrderHook"
+          class="com.checkout.hybris.facades.hooks.DefaultCheckoutComACHConsentPlaceOrderHook">
+        <constructor-arg name="modelService" ref="modelService"/>
+    </bean>
+
+    <bean id="checkoutComACHConsentPlaceOrderHookMergeDirective" depends-on="commercePlaceOrderMethodHooks"
+          parent="listMergeDirective">
+        <property name="add" ref="checkoutComACHConsentPlaceOrderHook"/>
+    </bean>
+
+    <alias name="defaultCheckoutComFlowConfigurationFacade" alias="checkoutComFlowConfigurationFacade"/>
+    <bean id="defaultCheckoutComFlowConfigurationFacade"
+          class="com.checkout.hybris.facades.flow.impl.DefaultCheckoutComFlowConfigurationFacade">
+        <constructor-arg name="baseSiteService" ref="baseSiteService"/>
+        <constructor-arg name="checkoutComFlowUIConfigurationConverter" ref="checkoutComFlowUIConfigurationConverter"/>
+    </bean>
+
+    <alias name="defaultCheckoutComFlowPaymentSessionFacade" alias="checkoutComFlowPaymentSessionFacade"/>
+    <bean id="defaultCheckoutComFlowPaymentSessionFacade" class="com.checkout.hybris.facades.flow.impl.DefaultCheckoutComFlowPaymentSessionFacade">
+        <constructor-arg name="checkoutComFlowPaymentSessionService" ref="checkoutComFlowPaymentSessionService"/>
+        <constructor-arg name="checkoutComFlowConfigurationFacade" ref="checkoutComFlowConfigurationFacade"/>
+        <constructor-arg name="paymentSessionResponseConverter" ref="checkoutComPaymentSessionResponseConverter"/>
+    </bean>
+
+    <alias name="defaultCheckoutComFlowPaymentInfoFacade" alias="checkoutComFlowPaymentInfoFacade"/>
+    <bean id="defaultCheckoutComFlowPaymentInfoFacade" class="com.checkout.hybris.facades.flow.impl.DefaultCheckoutComFlowPaymentInfoFacade">
+        <constructor-arg name="cartService" ref="cartService"/>
+        <constructor-arg name="paymentInfoService" ref="paymentInfoService"/>
+        <constructor-arg name="checkoutComFlowAPMPaymentInfoReverseConverter" ref="checkoutComFlowAPMPaymentInfoReverseConverter"/>
+        <constructor-arg name="checkoutComFlowCCPaymentInfoReverseConverter" ref="checkoutComFlowCCPaymentInfoReverseConverter"/>
+    </bean>
+
+    <beans profile="!dev">
+        <alias name="defaultCheckoutComAchFacade" alias="checkoutComACHFacade"/>
+        <bean id="defaultCheckoutComAchFacade"
+              class="com.checkout.hybris.facades.payment.ach.impl.DefaultCheckoutComAchFacade">
+            <constructor-arg name="checkoutComPaymentInfoFacade"
+                             ref="checkoutComPaymentInfoFacade"/>
+        </bean>
+    </beans>
+
+    <beans profile="dev">
+        <alias name="magicValuesCheckoutAchFacade" alias="checkoutComACHFacade"/>
+        <bean id="magicValuesCheckoutAchFacade"
+              class="com.checkout.hybris.facades.payment.ach.impl.MagicValuesCheckoutComAchFacade">
+            <constructor-arg name="cartService" ref="cartService"/>
+            <constructor-arg name="checkoutComPaymentInfoFacade"
+                             ref="checkoutComPaymentInfoFacade"/>
+        </bean>
+
+        <bean name="paymentDeclinedMagicPostalValueAchCheckoutStrategy"
+              class="com.checkout.hybris.facades.payment.ach.magicvalues.impl.PaymentDeclinedMagicPostalValueAchCheckoutStrategy"/>
+        <bean name="successfulPaymentCaptureMagicPostalValueAchCheckoutStrategy"
+              class="com.checkout.hybris.facades.payment.ach.magicvalues.impl.SuccessfulPaymentCaptureMagicPostalValueAchCheckoutStrategy"/>
+        <bean name="returnR01MagicPostalValueAchCheckoutStrategy"
+              class="com.checkout.hybris.facades.payment.ach.magicvalues.impl.ReturnR01MagicPostalValueAchCheckoutStrategy"/>
+        <bean name="returnR02MagicPostalValueAchCheckoutStrategy"
+              class="com.checkout.hybris.facades.payment.ach.magicvalues.impl.ReturnR02MagicPostalValueAchCheckoutStrategy"/>
+        <bean name="returnR07MagicPostalValueAchCheckoutStrategy"
+              class="com.checkout.hybris.facades.payment.ach.magicvalues.impl.ReturnR07MagicPostalValueAchCheckoutStrategy"/>
+
+        <util:list id="postalCodeMagicValuesCheckoutAchStrategy">
+            <ref bean="paymentDeclinedMagicPostalValueAchCheckoutStrategy"/>
+            <ref bean="successfulPaymentCaptureMagicPostalValueAchCheckoutStrategy"/>
+            <ref bean="returnR01MagicPostalValueAchCheckoutStrategy"/>
+            <ref bean="returnR02MagicPostalValueAchCheckoutStrategy"/>
+            <ref bean="returnR07MagicPostalValueAchCheckoutStrategy"/>
+        </util:list>
+
+        <bean class="com.checkout.hybris.facades.payment.ach.magicvalues.impl.MagicPostalCodeValuesAchCheckoutAchFactoryImpl">
+            <constructor-arg name="strategies" ref="postalCodeMagicValuesCheckoutAchStrategy"/>
+        </bean>
+    </beans>
+</beans>

@@ -1,0 +1,15 @@
+<div class="form-control-wrapper">
+  <p [hidden]="showTooltip !== true" class="cobadgedTooltip">
+    <ng-container *ngIf="tooltipLabel !== ''">{{ tooltipLabel | cxTranslate }}</ng-container>
+    <ng-container *ngIf="tooltipText !== ''">
+      <cx-icon
+        class="ml-2 cursor-pointer"
+        [type]="iconTypes.INFO"
+        libCheckoutComTooltip
+        tooltipText="{{ tooltipText | cxTranslate }}"
+      ></cx-icon>
+    </ng-container>
+  </p>
+  <span [ngClass]="cssClassByFieldType" class="form-control"></span>
+  <span [ngClass]="icon" *ngIf="icon" class="form-icon"></span>
+</div>

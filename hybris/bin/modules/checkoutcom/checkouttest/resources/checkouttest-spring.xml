@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="checkoutComCronJobPersistenceHook"
+          class="com.checkout.hybris.test.inbound.events.CheckoutComCronJobPersistenceHook">
+        <constructor-arg name="cronJobService" ref="cronJobService"/>
+    </bean>
+
+    <bean id="checkoutTestAbstractOrderGenericDao"
+          class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao">
+        <constructor-arg value="AbstractOrder"/>
+    </bean>
+
+    <bean id="checkoutPaymentIdValidateInterceptor"
+          class="com.checkout.hybris.test.interceptor.CheckoutComPaymentIdValidateInterceptor">
+        <constructor-arg name="modelService" ref="modelService"/>
+        <constructor-arg name="checkoutTestAbstractOrderGenericDao" ref="checkoutTestAbstractOrderGenericDao"/>
+    </bean>
+
+    <bean id="checkoutPaymentIdValidateInterceptorMapping"
+          class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+        <property name="interceptor" ref="checkoutPaymentIdValidateInterceptor"/>
+        <property name="typeCode" value="PaymentInfo"/>
+    </bean>
+
+</beans>

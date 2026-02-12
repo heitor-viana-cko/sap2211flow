@@ -1,0 +1,13 @@
+.link-consents{
+  color: var(--cx-color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+cx-spinner.overlay {
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  position: fixed;
+}

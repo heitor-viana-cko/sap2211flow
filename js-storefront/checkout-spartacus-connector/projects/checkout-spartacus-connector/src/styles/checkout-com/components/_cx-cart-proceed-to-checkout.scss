@@ -1,0 +1,15 @@
+%lib-checkout-com-express-cart-totals {
+  padding-bottom: 1.5rem;
+  padding-top: 0;
+  padding-inline: 3rem 0;
+
+  @include media-breakpoint-down(md) {
+    padding-bottom: 2rem;
+    align-self: flex-end;
+    padding-inline-start: 0;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding: 2rem 0 3rem;
+  }
+}

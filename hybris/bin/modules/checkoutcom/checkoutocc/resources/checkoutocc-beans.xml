@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.PaymentDetailsWsDTO">
+        <property name="paymentToken" type="java.lang.String"/>
+        <property name="paymentType" type="java.lang.String"/>
+        <property name="type" type="java.lang.String"/>
+        <property name="cardBin" type="java.lang.String"/>
+        <property name="mobileNumber" type="java.lang.String"/>
+        <property name="bic" type="java.lang.String"/>
+        <property name="accountNumber" type="java.lang.String"/>
+        <property name="accountType" type="java.lang.String"/>
+        <property name="paymentMethod" type="java.lang.String"/>
+        <property name="bankCode" type="java.lang.String"/>
+        <property name="routingNumber" type="java.lang.String"/>
+        <property name="companyName" type="java.lang.String"/>
+        <property name="accountIban" type="java.lang.String"/>
+        <property name="firstName" type="java.lang.String"/>
+        <property name="lastName" type="java.lang.String"/>
+        <property name="addressLine1" type="java.lang.String"/>
+        <property name="addressLine2" type="java.lang.String"/>
+        <property name="postalCode" type="java.lang.String"/>
+        <property name="city" type="java.lang.String"/>
+        <property name="country" type="java.lang.String"/>
+        <property name="authorizationToken" type="java.lang.String"/>
+        <property name="document" type="java.lang.String"/>
+        <property name="scheme" type="java.lang.String"/>
+        <property name="paymentContextId" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.CheckoutComPaymentDetailsWsDTO">
+        <property name="type" type="java.lang.String"/>
+        <property name="qrCodeData" type="java.lang.String"/>
+        <property name="accountNumber" type="java.lang.String"/>
+        <property name="billingAddress" type="de.hybris.platform.commercefacades.user.data.AddressData"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.CartWsDTO">
+        <property name="checkoutComPaymentInfo" type="com.checkout.dto.order.CheckoutComPaymentDetailsWsDTO"/>
+    </bean>
+
+    <bean class="com.checkout.dto.apm.CheckoutComAPMConfigurationWsDTO">
+        <property name="code" type="java.lang.String"/>
+        <property name="name" type="java.lang.String"/>
+        <property name="isRedirect" type="java.lang.Boolean"/>
+        <property name="isUserDataRequired" type="java.lang.Boolean"/>
+        <property name="media" type="de.hybris.platform.cmsocc.data.MediaWsDTO"/>
+    </bean>
+
+    <bean class="com.checkout.dto.apm.CheckoutComAPMConfigurationListWsDTO">
+        <property name="availableApmConfigurations"
+                  type="java.util.List&lt;com.checkout.dto.apm.CheckoutComAPMConfigurationWsDTO>">
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.OrderWsDTO">
+        <property name="redirectUrl" type="java.lang.String"/>
+        <property name="qrCodeData" type="java.lang.String"/>
+        <property name="checkoutPaymentType" type="java.lang.String"/>
+        <property name="checkoutComPaymentInfo" type="com.checkout.dto.order.CheckoutComPaymentDetailsWsDTO"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.PlaceWalletOrderWsDTO">
+        <property name="orderData" type="de.hybris.platform.commercewebservicescommons.dto.order.OrderWsDTO"/>
+        <property name="status" type="com.checkout.hybris.facades.enums.PlaceWalletOrderStatus"/>
+        <property name="errorMessage" type="java.lang.String"/>
+        <property name="redirectUrl" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.ApplePayValidateMerchantRequestWsDTO">
+        <property name="validationURL" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.ApplePayPaymentRequestWsDTO">
+        <property name="supportedNetworks" type="java.util.Set&lt;java.lang.String&gt;"/>
+        <property name="merchantCapabilities" type="java.util.Set&lt;java.lang.String&gt;"/>
+        <property name="countryCode" type="java.lang.String"/>
+        <property name="currencyCode" type="java.lang.String"/>
+        <property name="total" type="com.checkout.dto.order.ApplePayTotalWsDTO"/>
+        <property name="requiredBillingContactFields" type="java.util.List&lt;java.lang.String>"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.ApplePayTotalWsDTO">
+        <property name="label" type="java.lang.String"/>
+        <property name="amount" type="java.lang.String"/>
+        <property name="type" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.GooglePayMerchantConfigurationWsDTO">
+        <property name="baseCardPaymentMethod" type="com.checkout.dto.order.BaseCardPaymentMethodWsDTO"/>
+        <property name="clientSettings" type="com.checkout.dto.order.GooglePayClientSettingsWsDTO"/>
+        <property name="gateway" type="java.lang.String"/>
+        <property name="gatewayMerchantId" type="java.lang.String"/>
+        <property name="merchantName" type="java.lang.String"/>
+        <property name="merchantId" type="java.lang.String"/>
+        <property name="transactionInfo" type="com.checkout.dto.order.GooglePayTransactionInfoWsDTO"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.BaseCardPaymentMethodWsDTO">
+        <property name="type" type="java.lang.String"/>
+        <property name="parameters" type="com.checkout.dto.order.BaseCardPaymentMethodParametersWsDTO"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.BaseCardPaymentMethodParametersWsDTO">
+        <property name="allowedAuthMethods" type="java.util.Set&lt;java.lang.String&gt;"/>
+        <property name="allowedCardNetworks" type="java.util.Set&lt;java.lang.String&gt;"/>
+        <property name="billingAddressRequired" type="java.lang.Boolean"/>
+        <property name="billingAddressParameters" type="com.checkout.dto.order.GooglePayBillingAddressParametersFormatWsDTO"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.GooglePayBillingAddressParametersFormatWsDTO">
+        <property name="format" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.GooglePayClientSettingsWsDTO">
+        <property name="environment" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.GooglePayTransactionInfoWsDTO">
+        <property name="currencyCode" type="java.lang.String"/>
+        <property name="totalPrice" type="java.lang.String"/>
+        <property name="totalPriceStatus" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.checkout.dto.order.CheckoutPlaceOrderDto">
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <property name="ckoSessionId" type="java.lang.String">
+            <annotations>@JsonProperty("cko-session-id")</annotations>
+        </property>
+    </bean>
+
+    <bean class="com.checkout.dto.plaidlink.PlaidLinkCreationResponseDTO">
+        <property name="publicToken" type="java.lang.String"/>
+        <property name="metadata"
+                  type="com.checkout.dto.plaidlink.PlaidLinkMetadataResponseDTO"/>
+        <property name="customerConsents" type="java.lang.Boolean"/>
+    </bean>
+
+    <bean class="com.checkout.dto.plaidlink.PlaidLinkMetadataResponseAccountDTO">
+        <property name="class_type" type="java.lang.String"/>
+        <property name="id" type="java.lang.String"/>
+        <property name="mask" type="java.lang.String"/>
+        <property name="name" type="java.lang.String"/>
+        <property name="subtype" type="java.lang.String"/>
+        <property name="type" type="java.lang.String"/>
+        <property name="verification_status" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.checkout.dto.plaidlink.PlaidLinkMetadataResponseInstitutionDTO">
+        <property name="institution_id" type="java.lang.String"/>
+        <property name="name" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.checkout.dto.plaidlink.PlaidLinkMetadataResponseDTO">
+        <property name="account"
+                  type="com.checkout.dto.plaidlink.PlaidLinkMetadataResponseAccountDTO"/>
+        <property name="accounts"
+                  type="java.util.List&lt;com.checkout.dto.plaidlink.PlaidLinkMetadataResponseAccountDTO&gt;"/>
+        <property name="account_id" type="java.lang.String"/>
+        <property name="link_session_id" type="java.lang.String"/>
+        <property name="public_token" type="java.lang.String"/>
+        <property name="status" type="java.lang.String"/>
+        <property name="transfer_status" type="java.lang.String"/>
+        <property name="institution"
+                  type="com.checkout.dto.plaidlink.PlaidLinkMetadataResponseInstitutionDTO"/>
+    </bean>
+
+    <bean class="com.checkout.dto.flow.configuration.FlowEnabledDataResponseDTO">
+        <property name="enabled" type="boolean"/>
+    </bean>
+</beans>

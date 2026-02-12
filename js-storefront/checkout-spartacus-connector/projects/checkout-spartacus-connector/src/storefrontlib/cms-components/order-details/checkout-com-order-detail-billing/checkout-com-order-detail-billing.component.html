@@ -1,0 +1,32 @@
+@if (order$ | async; as order) {
+  <div class="cx-order-items">
+    @if (order.paymentInfo; as paymentDetails) {
+      <div class="cx-review-summary">
+        @if (isPaymentInfoCardFull(paymentDetails)) {
+          <div class="cx-review-summary-card cx-review-summary-payment-card">
+            <cx-card
+              [content]="getPaymentMethodCard(paymentDetails) | async"
+            ></cx-card>
+          </div>
+        }
+
+        @if (isApmInfoCard(order)) {
+          <div class="cx-review-summary-card cx-review-summary-payment-card">
+            <cx-card
+              [content]="getApmInfoCard(order.paymentType) | async"
+            ></cx-card>
+          </div>
+        }
+
+        <div
+          class="cx-review-summary-card cx-review-summary-payment-card"
+          *ngIf="paymentDetails?.billingAddress"
+        >
+          <cx-card
+            [content]="getBillingAddressCard(paymentDetails) | async"
+          ></cx-card>
+        </div>
+      </div>
+    }
+  </div>
+}

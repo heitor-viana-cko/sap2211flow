@@ -1,0 +1,1097 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="items.xsd">
+
+    <collectiontypes>
+        <collectiontype code="CheckoutComAPMs" elementtype="CheckoutComAPMConfiguration"/>
+        <collectiontype code="PayloadCollection" elementtype="Payload" type="list"/>
+    </collectiontypes>
+
+    <enumtypes>
+        <enumtype code="CreditCardType" autocreate="false" generate="false">
+            <value code="jcb"/>
+            <value code="discover"/>
+            <value code="mastercard"/>
+            <value code="americanexpress"/>
+            <value code="dinersclubinternational"/>
+        </enumtype>
+
+        <enumtype code="EnvironmentType">
+            <value code="test"/>
+            <value code="production"/>
+        </enumtype>
+
+        <enumtype code="PaymentActionType">
+            <value code="authorize"/>
+            <value code="authorize_and_capture"/>
+        </enumtype>
+
+        <enumtype code="OrderStatus" autocreate="false" dynamic="true">
+            <value code="AUTHORIZATION_PENDING"/>
+            <value code="CAPTURE_PENDING"/>
+            <value code="PAYMENT_RETURNED"/>
+        </enumtype>
+
+        <enumtype code="ReturnStatus" autocreate="false" dynamic="true">
+            <value code="PAYMENT_REVERSAL_PENDING"/>
+        </enumtype>
+
+        <enumtype code="MadaBin" dynamic="true"/>
+
+        <enumtype code="AchAccountType" dynamic="true"/>
+
+        <enumtype code="SepaPaymentType">
+            <value code="RECURRING"/>
+            <value code="SINGLE"/>
+        </enumtype>
+
+        <enumtype code="ApplePaySupportedNetworks" dynamic="true">
+            <value code="amex"/>
+            <value code="cartesBancaires"/>
+            <value code="chinaUnionPay"/>
+            <value code="discover"/>
+            <value code="eftpos"/>
+            <value code="electron"/>
+            <value code="elo"/>
+            <value code="interac"/>
+            <value code="jcb"/>
+            <value code="mada"/>
+            <value code="maestro"/>
+            <value code="masterCard"/>
+            <value code="privateLabel"/>
+            <value code="visa"/>
+            <value code="vPay"/>
+        </enumtype>
+
+        <enumtype code="ApplePayMerchantCapabilities" dynamic="true">
+            <value code="supportsCredit"/>
+            <value code="supportsDebit"/>
+            <value code="supports3DS"/>
+            <value code="supportsEMV"/>
+        </enumtype>
+
+        <enumtype code="GooglePayCardNetworks" dynamic="true">
+            <value code="AMEX"/>
+            <value code="DISCOVER"/>
+            <value code="INTERAC"/>
+            <value code="JCB"/>
+            <value code="MASTERCARD"/>
+            <value code="VISA"/>
+        </enumtype>
+
+        <enumtype code="GooglePayCardAuthMethods" dynamic="true">
+            <value code="PAN_ONLY"/>
+            <value code="CRYPTOGRAM_3DS"/>
+        </enumtype>
+
+        <enumtype code="OxxoIntegrationType" dynamic="true">
+            <value code="redirect"/>
+            <value code="direct"/>
+        </enumtype>
+
+        <enumtype code="PaymentTypes" dynamic="true">
+            <value code="Regular"/>
+            <value code="Recurring"/>
+            <value code="MOTO"/>
+            <value code="Installment"/>
+        </enumtype>
+
+        <enumtype code="achEnv" dynamic="true">
+            <value code="Sandbox"/>
+            <value code="Development"/>
+            <value code="Production"/>
+        </enumtype>
+
+    </enumtypes>
+
+    <relations>
+        <relation code="CheckoutComAPMConfiguration2Country" localized="false">
+            <deployment table="APMConfigCountry" typecode="23307"/>
+            <sourceElement type="CheckoutComAPMConfiguration" cardinality="many" navigable="false"/>
+            <targetElement qualifier="restrictedCountries" type="Country"
+                           cardinality="many"
+                           collectiontype="set"/>
+        </relation>
+
+        <relation code="CheckoutComAPMConfiguration2Currency" localized="false">
+            <deployment table="APMConfigCurrency" typecode="23308"/>
+            <sourceElement type="CheckoutComAPMConfiguration" cardinality="many" navigable="false"/>
+            <targetElement qualifier="restrictedCurrencies" type="Currency"
+                           cardinality="many"
+                           collectiontype="set"/>
+        </relation>
+
+        <relation code="CheckoutComApplePayConfiguration2Network" localized="false">
+            <deployment table="ApplePayConfNetwork" typecode="23358"/>
+            <sourceElement type="CheckoutComApplePayConfiguration" cardinality="many" navigable="false"/>
+            <targetElement qualifier="supportedNetworks" type="ApplePaySupportedNetworks"
+                           cardinality="many"
+                           collectiontype="set"/>
+        </relation>
+
+        <relation code="CheckoutComApplePayConfiguration2Capabilities" localized="false">
+            <deployment table="ApplePayConfCapabs" typecode="23359"/>
+            <sourceElement type="CheckoutComApplePayConfiguration" cardinality="many" navigable="false"/>
+            <targetElement qualifier="merchantCapabilities" type="ApplePayMerchantCapabilities"
+                           cardinality="many"
+                           collectiontype="set"/>
+        </relation>
+
+        <relation code="CheckoutComGooglePayConfiguration2CardNetworks" localized="false">
+            <deployment table="GooglePayConfNetwork" typecode="23360"/>
+            <sourceElement type="CheckoutComGooglePayConfiguration" cardinality="many" navigable="false"/>
+            <targetElement qualifier="allowedCardNetworks" type="GooglePayCardNetworks"
+                           cardinality="many"
+                           collectiontype="set"/>
+        </relation>
+
+        <relation code="CheckoutComGooglePayConfiguration2CardAuthMethods" localized="false">
+            <deployment table="GooglePayConfMethds" typecode="23361"/>
+            <sourceElement type="CheckoutComGooglePayConfiguration" cardinality="many" navigable="false"/>
+            <targetElement qualifier="allowedCardAuthMethods" type="GooglePayCardAuthMethods"
+                           cardinality="many"
+                           collectiontype="set"/>
+        </relation>
+
+    </relations>
+
+    <itemtypes>
+        <typegroup name="PaymentInfo">
+            <itemtype code="PaymentInfo" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="paymentId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>The checkout.com payment id of the valid payment transaction</description>
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="paymentIdIdx">
+                        <key attribute="paymentId"/>
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="CheckoutComCreditCardPaymentInfo" extends="CreditCardPaymentInfo">
+                <description>Extending CreditCardPaymentInfo type with additional attributes specific for
+                    checkout.com.
+                </description>
+                <attributes>
+                    <attribute qualifier="cardToken" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Token representing the card</description>
+                    </attribute>
+                    <attribute qualifier="cardBin" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Number representing the card bin.</description>
+                    </attribute>
+                    <attribute qualifier="autoCapture" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <modifiers optional="false"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Indicates if the payment method is expected to be auto-captured</description>
+                    </attribute>
+                    <attribute qualifier="markToSave" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Indicates if the customer wants to save the card.</description>
+                    </attribute>
+                    <attribute qualifier="scheme" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Preferred scheme for co-branded cards.</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComAPMPaymentInfo" extends="PaymentInfo">
+                <attributes>
+                    <attribute qualifier="type" type="java.lang.String">
+                        <modifiers read="true" write="true" search="true" optional="false" initial="true"/>
+                        <persistence type="property"/>
+                        <description>The Redirect Payment type.</description>
+                    </attribute>
+                    <attribute qualifier="userDataRequired" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <modifiers optional="false"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Indicates if the payment needs user data to complete the payment authorization.
+                        </description>
+                    </attribute>
+                    <attribute qualifier="deferred" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Indicates that the apm payment is deferred.
+                        </description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComBenefitPayPaymentInfo" extends="CheckoutComAPMPaymentInfo">
+                <attributes>
+                    <attribute qualifier="qrCode" type="java.lang.String">
+                        <description>User data</description>
+                        <modifiers optional="true"/>
+                        <persistence type="property">
+                            <columntype database="oracle">
+                                <value>CLOB</value>
+                            </columntype>
+                            <columntype database="sap">
+                                <value>NCLOB</value>
+                            </columntype>
+                            <columntype database="mysql">
+                                <value>MEDIUMTEXT</value>
+                            </columntype>
+                            <columntype database="sqlserver">
+                                <value>TEXT</value>
+                            </columntype>
+                            <columntype>
+                                <value>HYBRIS.LONG_STRING</value>
+                            </columntype>
+                        </persistence>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComFawryPaymentInfo" extends="CheckoutComAPMPaymentInfo">
+                <attributes>
+                    <attribute qualifier="mobileNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Mobile number</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComOxxoPaymentInfo" extends="CheckoutComAPMPaymentInfo">
+                <attributes>
+                    <attribute qualifier="document" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Mexican personal identity code</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComAchPaymentInfo" extends="CheckoutComAPMPaymentInfo">
+                <attributes>
+                    <attribute qualifier="accountHolderName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Account Holder Name</description>
+                    </attribute>
+                    <attribute qualifier="accountType" type="AchAccountType">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Account Type</description>
+                    </attribute>
+                    <attribute qualifier="accountNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Account Number</description>
+                    </attribute>
+                    <attribute qualifier="routingNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Routing Number</description>
+                    </attribute>
+                    <attribute qualifier="companyName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Company Name</description>
+                    </attribute>
+                    <attribute qualifier="paymentMethod" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Payment Method</description>
+                    </attribute>
+                    <attribute qualifier="bankCode" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Bank Code</description>
+                    </attribute>
+                    <attribute qualifier="mask" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Masked account number</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComSepaPaymentInfo" extends="CheckoutComAPMPaymentInfo">
+                <attributes>
+                    <attribute qualifier="paymentType" type="SepaPaymentType">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Payment Type</description>
+                    </attribute>
+                    <attribute qualifier="accountIban" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Account IBAN</description>
+                    </attribute>
+                    <attribute qualifier="firstName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>First Name</description>
+                    </attribute>
+                    <attribute qualifier="lastName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Last Name</description>
+                    </attribute>
+                    <attribute qualifier="addressLine1" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Address Line 1</description>
+                    </attribute>
+                    <attribute qualifier="addressLine2" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Address Line 2</description>
+                    </attribute>
+                    <attribute qualifier="city" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>City</description>
+                    </attribute>
+                    <attribute qualifier="postalCode" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Postal Code</description>
+                    </attribute>
+                    <attribute qualifier="country" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Country</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComIdealPaymentInfo" extends="CheckoutComAPMPaymentInfo">
+                <attributes>
+                    <attribute qualifier="bic" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>Bic number</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComKlarnaAPMPaymentInfo" extends="CheckoutComAPMPaymentInfo">
+                <attributes>
+                    <attribute qualifier="authorizationToken" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>The generated Payment Token from checkout.com</description>
+                    </attribute>
+                    <attribute qualifier="paymentContext" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>The Payment Context from checkout.com</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComGooglePayPaymentInfo" extends="CheckoutComAPMPaymentInfo">
+                <attributes>
+                    <attribute qualifier="token" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>The generated Payment Token from checkout.com</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComApplePayPaymentInfo" extends="CheckoutComAPMPaymentInfo">
+                <attributes>
+                    <attribute qualifier="token" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                        <description>The generated Payment Token from checkout.com</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+        </typegroup>
+
+        <typegroup name="Order">
+            <itemtype code="AbstractOrder" autocreate="false" generate="false">
+                <description>Extending Abstract Order to hold the Checkout.com payment reference</description>
+                <attributes>
+                    <attribute qualifier="checkoutComPaymentReference" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers unique="true" optional="false" initial="true"/>
+                        <description>This is the Checkout.com payment reference</description>
+                    </attribute>
+                    <attribute qualifier="achConsent" type="CheckoutComACHConsent">
+                        <persistence type="property"/>
+                        <modifiers optional="true" initial="false"/>
+                        <description>This is the related ACH Consent</description>
+                    </attribute>
+                    <attribute qualifier="requestsPayload" type="PayloadCollection">
+                        <description>Checkout api requests payload</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="responsesPayload" type="PayloadCollection">
+                        <description>Checkout api responses payload</description>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="checkoutComPaymentReferenceIdx">
+                        <key attribute="checkoutComPaymentReference"/>
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="Payload" extends="GenericItem">
+                <deployment table="Payload" typecode="23362"/>
+                <attributes>
+                    <attribute qualifier="payload" type="java.lang.String">
+                        <persistence type="property">
+                            <columntype>
+                                <value>HYBRIS.LONG_STRING</value>
+                            </columntype>
+                            <columntype database="mysql">
+                                <value>MEDIUMTEXT</value>
+                            </columntype>
+                            <columntype database="oracle">
+                                <value>CLOB</value>
+                            </columntype>
+                            <columntype database="sqlserver">
+                                <value>TEXT</value>
+                            </columntype>
+                            <columntype database="sap">
+                                <value>NCLOB</value>
+                            </columntype>
+                        </persistence>
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+        <typegroup name="checkoutCom">
+            <itemtype code="CheckoutComApplePayConfiguration" extends="GenericItem">
+                <deployment table="ChkoApplePayConfig" typecode="23321"/>
+                <attributes>
+                    <attribute qualifier="merchantId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Merchant identifier</description>
+                    </attribute>
+                    <attribute qualifier="merchantName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Merchant Name</description>
+                    </attribute>
+                    <attribute qualifier="countryCode" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Country Code</description>
+                    </attribute>
+                    <attribute qualifier="certificate" type="java.lang.String">
+                        <persistence type="property">
+                            <columntype database="oracle">
+                                <value>CLOB</value>
+                            </columntype>
+                            <columntype database="sap">
+                                <value>NCLOB</value>
+                            </columntype>
+                            <columntype database="mysql">
+                                <value>MEDIUMTEXT</value>
+                            </columntype>
+                            <columntype database="sqlserver">
+                                <value>TEXT</value>
+                            </columntype>
+                            <columntype>
+                                <value>HYBRIS.LONG_STRING</value>
+                            </columntype>
+                        </persistence>
+                        <description>Certificate</description>
+                    </attribute>
+                    <attribute qualifier="privateKey" type="java.lang.String">
+                        <persistence type="property">
+                            <columntype database="oracle">
+                                <value>CLOB</value>
+                            </columntype>
+                            <columntype database="sap">
+                                <value>NCLOB</value>
+                            </columntype>
+                            <columntype database="mysql">
+                                <value>MEDIUMTEXT</value>
+                            </columntype>
+                            <columntype database="sqlserver">
+                                <value>TEXT</value>
+                            </columntype>
+                            <columntype>
+                                <value>HYBRIS.LONG_STRING</value>
+                            </columntype>
+                        </persistence>
+                        <description>Private Key</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComGooglePayConfiguration" extends="GenericItem">
+                <deployment table="ChkoGooglePayConfig" typecode="23322"/>
+                <attributes>
+                    <attribute qualifier="merchantId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Merchant identifier</description>
+                    </attribute>
+                    <attribute qualifier="merchantName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Merchant Name</description>
+                    </attribute>
+                    <attribute qualifier="gateway" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>The payment gateway id that's supported by the Google Pay API</description>
+                    </attribute>
+                    <attribute qualifier="gatewayMerchantId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Gateway merchant ID, which is provided by the gateway</description>
+                    </attribute>
+                    <attribute qualifier="environment" type="EnvironmentType">
+                        <persistence type="property"/>
+                        <description>The Checkout.com environment to which we is integrated.</description>
+                        <defaultvalue>test</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="type" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Describe your site's support for the CARD payment method</description>
+                    </attribute>
+                    <attribute qualifier="threeDSEnabled" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Determines whether the 3ds payment is enabled.</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComKlarnaConfiguration" extends="GenericItem">
+                <deployment table="ChkoKlarnaConfig" typecode="23323"/>
+                <attributes>
+                    <attribute qualifier="instanceId" type="java.lang.String">
+                        <modifiers initial="true" optional="false" unique="true"/>
+                        <persistence type="property"/>
+                        <description>The ID you'll use to identify this instance of the Klarna Payments client.
+                        </description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComMerchantConfiguration" extends="GenericItem">
+                <deployment table="ChkoMerchantConfig" typecode="23301"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Code of MerchantConfig</description>
+                        <modifiers initial="true" optional="false" unique="true"/>
+                    </attribute>
+                    <attribute qualifier="secretKey" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Use the valid secret key of your Checkout.com account. You can find this in the Hub.
+                        </description>
+                    </attribute>
+                    <attribute qualifier="publicKey" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Your public key. You can find it in the Hub.</description>
+                    </attribute>
+                    <attribute qualifier="privateSharedKey" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Your private shared key. You can find it in the Hub.</description>
+                    </attribute>
+                    <attribute qualifier="nasSecretKey" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Use the valid secret key of your NAS Checkout.com account. You can find this in the
+                            Hub.
+                        </description>
+                    </attribute>
+                    <attribute qualifier="channelProcessingId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Use the channel processing Id from your checkout merchant dashboard
+                        </description>
+                    </attribute>
+                    <attribute qualifier="nasPublicKey" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Your NAS public key. You can find it in the Hub.</description>
+                    </attribute>
+                    <attribute qualifier="nasSignatureKey" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Your NAS signature key. You can find it in the Hub.</description>
+                    </attribute>
+                    <attribute qualifier="nasAuthorisationHeaderKey" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Your NAS Authorisation header key. You can find it in the Hub, Notifications settings.</description>
+                    </attribute>
+                    <attribute qualifier="useNasAuthorisationKeyOnNotifications" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <modifiers optional="false"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Determines whether to use signature key to verify NAS Notifications</description>
+                    </attribute>
+                    <attribute qualifier="useNasSignatureKeyOnNotifications" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <modifiers optional="false"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Determines whether to use signature key to verify NAS Notifications</description>
+                    </attribute>
+                    <attribute qualifier="environment" type="EnvironmentType">
+                        <persistence type="property"/>
+                        <description>The Checkout.com environment to which we is integrated.</description>
+                        <defaultvalue>test</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="paymentAction" type="PaymentActionType">
+                        <persistence type="property"/>
+                        <description>The payment action type that will be executed while paying with Checkout.com.
+                        </description>
+                        <defaultvalue>authorize</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="threeDSEnabled" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <modifiers optional="false"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Determines whether the 3ds payment is enabled.</description>
+                    </attribute>
+                    <attribute qualifier="noThreeDSAttempt" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <modifiers optional="false"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Determines whether the no 3DS payment can be attempted.</description>
+                    </attribute>
+                    <attribute qualifier="reviewTransactionsAtRisk" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <modifiers optional="false"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Determines whether the payment transactions with risk flag should be reviewed or
+                            not.
+                        </description>
+                    </attribute>
+                    <attribute qualifier="authorisationAmountValidationThreshold" type="java.lang.Double">
+                        <persistence type="property"/>
+                        <description>The threshold used when deciding if the authorisation amount is valid or not.
+                        </description>
+                    </attribute>
+                    <attribute qualifier="includeBillingDescriptor" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <modifiers optional="false"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Determines whether the billing descriptor is included in the payment request.
+                        </description>
+                    </attribute>
+                    <attribute qualifier="billingDescriptorName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>A dynamic description of the charge.</description>
+                    </attribute>
+                    <attribute qualifier="billingDescriptorCity" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>The city from which the charge originated.</description>
+                    </attribute>
+                    <attribute qualifier="applePayConfiguration" type="CheckoutComApplePayConfiguration">
+                        <persistence type="property"/>
+                        <description>The configuration for ApplePay.</description>
+                    </attribute>
+                    <attribute qualifier="googlePayConfiguration" type="CheckoutComGooglePayConfiguration">
+                        <persistence type="property"/>
+                        <description>The configuration for GooglePay.</description>
+                    </attribute>
+                    <attribute qualifier="klarnaConfiguration" type="CheckoutComKlarnaConfiguration">
+                        <persistence type="property"/>
+                        <description>The configuration for Klarna.</description>
+                    </attribute>
+                    <attribute qualifier="achConfiguration" type="CheckoutComACHConfiguration">
+                        <description>The configuration for ACH</description>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComAPMConfiguration" extends="GenericItem">
+                <deployment table="ChkoAPMConfig" typecode="23306"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String">
+                        <modifiers initial="true" unique="true" write="true" search="true" read="true"
+                                   optional="false"/>
+                        <persistence type="property"/>
+                        <description>Contains the code of the APM</description>
+                    </attribute>
+                    <attribute qualifier="name" type="localized:java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="true"/>
+                        <persistence type="property"/>
+                        <description>Contains the name of the APM</description>
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="checkoutComAPMIdx" unique="true">
+                        <key attribute="code"/>
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="CheckoutComFawryConfiguration" extends="CheckoutComAPMConfiguration">
+                <attributes>
+                    <attribute qualifier="productId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Product id to send in the fawry payment request</description>
+                    </attribute>
+                    <attribute qualifier="productDescription" type="localized:java.lang.String">
+                        <persistence type="property"/>
+                        <description>Product description to send in the request</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComOxxoConfiguration" extends="CheckoutComAPMConfiguration">
+                <attributes>
+                    <attribute qualifier="integrationType" type="OxxoIntegrationType">
+                        <persistence type="property"/>
+                        <description>The type of integration</description>
+                    </attribute>
+                    <attribute qualifier="description" type="localized:java.lang.String">
+                        <persistence type="property"/>
+                        <description>A description of de payment</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComACHConfiguration" extends="GenericItem">
+                <deployment table="ChkoACHConfig" typecode="23310"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String">
+                        <modifiers initial="true" unique="true" write="true" search="true" read="true"
+                                   optional="false"/>
+                        <persistence type="property"/>
+                        <description>Contains the code of the ACH</description>
+                    </attribute>
+                    <attribute qualifier="name" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Contains the name of the ACH</description>
+                    </attribute>
+                    <attribute qualifier="clientName" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Contains the clientName of the ACH</description>
+                    </attribute>
+                    <attribute qualifier="language" type="Language">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Contains the language of the ACH</description>
+                    </attribute>
+                    <attribute qualifier="redirectUri" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Contains the redirectUri of the ACH</description>
+                    </attribute>
+                    <attribute qualifier="webhook" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Contains the webhook of the ACH</description>
+                    </attribute>
+                    <attribute qualifier="linkCustomizationName" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Contains the name of the ACH</description>
+                    </attribute>
+                    <attribute qualifier="clientId" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Contains the clientId of the ACH</description>
+                    </attribute>
+                    <attribute qualifier="secret" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Contains the secret of the </description>
+                    </attribute>
+                    <attribute qualifier="achEnv" type="AchEnv">
+                        <persistence type="property"/>
+                        <description>The Ach Environment</description>
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="checkoutComACHIdx" unique="true">
+                        <key attribute="code"/>
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="CheckoutComACHConsent">
+                <deployment table="ChkoACHConsent" typecode="23311"/>
+                <attributes>
+                    <attribute qualifier="order" type="AbstractOrder">
+                        <modifiers unique="true" optional="false" initial="false" read="true" write="true"/>
+                        <persistence type="property"/>
+                        <description>Order</description>
+                    </attribute>
+                    <attribute qualifier="payer" type="java.lang.String">
+                        <modifiers initial="true" write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Payer or company name</description>
+                    </attribute>
+                    <attribute qualifier="email" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Payer's email address</description>
+                    </attribute>
+                    <attribute qualifier="accountType" type="ACHAccountType">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Checking or savings account type</description>
+                    </attribute>
+                    <attribute qualifier="bankName" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Bank name</description>
+                    </attribute>
+                    <attribute qualifier="accountNumber" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Account number</description>
+                    </attribute>
+                    <attribute qualifier="routingNumber" type="java.lang.String">
+                        <modifiers write="true" search="true" read="true" optional="false"/>
+                        <persistence type="property"/>
+                        <description>Routing Number</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComCleanupCronJob" extends="CronJob">
+                <attributes>
+                    <attribute qualifier="itemTypeCode" type="java.lang.String">
+                        <description>Item Type Code to remove</description>
+                        <modifiers initial="true" optional="false"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="batchSize" type="java.lang.Integer">
+                        <description>Size of batches to be processed</description>
+                        <persistence type="property"/>
+                        <defaultvalue>5000</defaultvalue>
+                        <modifiers optional="true"/>
+                    </attribute>
+                    <attribute qualifier="itemRemovalAge" type="java.lang.Integer">
+                        <description>Time (in seconds) that states how old an item should be to be removed by the cronjob</description>
+                        <persistence type="property"/>
+                        <modifiers optional="true"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+        </typegroup>
+
+        <typegroup name="Site">
+            <itemtype code="BaseSite" autocreate="false" generate="false">
+                <description>Extending BaseSite type with additional attributes.</description>
+                <attributes>
+                    <attribute qualifier="checkoutComMerchantConfiguration" type="CheckoutComMerchantConfiguration">
+                        <description>The Merchant Configuration</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="checkoutComSuccessRedirectUrl" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Payment redirect URL for successful transaction</description>
+                    </attribute>
+                    <attribute qualifier="checkoutComFailureRedirectUrl" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Payment redirect URL for failure transaction</description>
+                    </attribute>
+                    <attribute qualifier="flow" type="java.lang.Boolean">
+                        <persistence type="property"/>
+                        <description>APMs configurations available for the site</description>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <modifiers optional="false"/>
+                    </attribute>
+                    <attribute qualifier="flowUIConfiguration" type="CheckoutComFlowUIConfiguration">
+                        <persistence type="property"/>
+                        <description>Flow UI Configuration</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComFlowUIConfiguration">
+                <deployment table="ChkoFloUIConfig" typecode="23349"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Code of FlowUIConfiguration</description>
+                        <modifiers initial="true" optional="false" unique="true"/>
+                        <defaultvalue>defaultFFlowUIConfiguration</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorAction" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Action Element</description>
+                        <defaultvalue>"#5E48FC"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorBackground" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Background Element</description>
+                        <defaultvalue>"#0A0A0C"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorBorder" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Border Element</description>
+                        <defaultvalue>"#68686C"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorDisabled" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Disabled Element</description>
+                        <defaultvalue>"#64646E"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorError" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Error Element</description>
+                        <defaultvalue>"#FF3300"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorFormBackground" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Form Background Element</description>
+                        <defaultvalue>"#1F1F1F"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorFormBorder" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Form Border Element</description>
+                        <defaultvalue>"#1F1F1F"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorInverse" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Inverse Element</description>
+                        <defaultvalue>"#F9F9FB"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorOutline" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Outline Element</description>
+                        <defaultvalue>"#ADA4EC"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorPrimary" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Primary Element</description>
+                        <defaultvalue>"#F9F9FB"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorSecondary" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Secondary Element</description>
+                        <defaultvalue>"#828388"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="colorSuccess" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Color for Success Element</description>
+                        <defaultvalue>"#2ECC71"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="button" type="CheckoutComFlowElementUIConfig">
+                        <persistence type="property"/>
+                        <description>Configuration for button</description>
+                    </attribute>
+                    <attribute qualifier="footnote" type="CheckoutComFlowElementUIConfig">
+                        <persistence type="property"/>
+                        <description>Configuration for footnote</description>
+                    </attribute>
+                    <attribute qualifier="label" type="CheckoutComFlowElementUIConfig">
+                        <persistence type="property"/>
+                        <description>Configuration for label</description>
+                    </attribute>
+                    <attribute qualifier="subheading" type="CheckoutComFlowElementUIConfig">
+                        <persistence type="property"/>
+                        <description>Configuration for subheading</description>
+                    </attribute>
+                    <attribute qualifier="borderRadius" type="CheckoutComFlowAroundUIConfiguration">
+                        <persistence type="property"/>
+                        <description>Border Radius Configuration</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComFlowElementUIConfig">
+                <deployment table="ChkoFlowElemUIConfig" typecode="23350"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Code of FlowElementUIConfig</description>
+                        <modifiers unique="true"/>
+                    </attribute>
+                    <attribute qualifier="fontFamily" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Font Family Element</description>
+                        <defaultvalue>"Roboto Mono, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Noto Sans, Liberation Sans, Arial, sans-serif"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="fontSize" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Font Size Element</description>
+                        <defaultvalue>"16px"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="fontWeight" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Font Weight Element</description>
+                        <defaultvalue>"700"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="letterSpacing" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Letter Spacing Element</description>
+                        <defaultvalue>"0"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="lineHeight" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Line Height Element</description>
+                        <defaultvalue>"24px"</defaultvalue>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComFlowAroundUIConfiguration">
+                <deployment table="ChkoFlowAroundUIConfig" typecode="23351"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Code of CheckoutComFlowAroundUIConfiguration</description>
+                        <modifiers initial="true" optional="false" unique="true"/>
+                        <defaultvalue>defaultFlowAroundUIConfiguration</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="top" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Top Element</description>
+                        <defaultvalue>"8px"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="bottom" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Bottom Element</description>
+                        <defaultvalue>"0"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="left" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Left Element</description>
+                        <defaultvalue>"0"</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="right" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Right Element</description>
+                        <defaultvalue>"8px"</defaultvalue>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CheckoutComGlobalAPMConfiguration" singleton="true">
+                <deployment table="ChkoGlobAPMConfig" typecode="23348"/>
+                <attributes>
+                    <attribute qualifier="nasAPMs" type="CheckoutComAPMs">
+                        <persistence type="property"/>
+                        <description>APMs that are enabled for NAS</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+        <typegroup name="Customer">
+            <itemtype code="Customer" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="taxNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>The tax Number used for L2 payments purposes</description>
+                    </attribute>
+                    <attribute qualifier="dutyAmount" type="java.lang.Double">
+                        <persistence type="property"/>
+                        <description>The total duty amount for L3 payments purposes</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+    </itemtypes>
+
+</items>

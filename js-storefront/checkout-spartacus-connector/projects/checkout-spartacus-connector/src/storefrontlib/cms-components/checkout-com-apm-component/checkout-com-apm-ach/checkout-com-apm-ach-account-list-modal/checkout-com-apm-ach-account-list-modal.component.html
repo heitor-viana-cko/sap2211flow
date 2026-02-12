@@ -1,0 +1,74 @@
+<div
+  class="cx-modal-container"
+  role="dialog"
+  aria-labelledby="dialogTitle"
+>
+  <div class="cx-modal-content">
+    <form
+      (ngSubmit)="onSubmit()"
+      [formGroup]="achAccountListForm"
+    >
+      <div class="cx-dialog-header modal-header">
+        <div class="cx-dialog-title modal-title">
+          {{ 'achAccountModal.popupTitle' | cxTranslate : { institution: achMetadata.institution.name } }}
+        </div>
+        <button
+          type="button"
+          [attr.aria-label]="'common.close' | cxTranslate"
+          class="close"
+          tabindex="-1"
+          (click)="close('close')"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="cx-dialog-body modal-body">
+        <div class="container">
+          <ng-container *ngIf="achAccountList">
+            <ng-container *ngFor="let accountType of Object.keys(achAccountList)">
+              <div class="cx-ach-account-list-group">
+                <h4 class="ch-ach-account-type-title text-muted">{{accountType}}</h4>
+                <ul class="cx-list-group">
+                  <ng-container *ngFor="let account of achAccountList[accountType]">
+                    <li class="cx-list-group-item" id="item-{{account.id}}">
+                      <div class="form-group">
+                        <div class="form-check">
+                          <label role="button">
+                            <input
+                              type="radio"
+                              formControlName="account_id"
+                              class="form-check-input"
+                              [value]="account.id"
+                              id="input-{{account.id}}"
+                            />
+                            <p class="form-check-label" id="label-{{account.id}}">{{account.name}}</p><br/>
+                            <p class="ch-ach-account-number text-muted" id="account-{{account.id}}">**** **** {{account.mask}}</p>
+                          </label>
+                        </div>
+                      </div>
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="cx-dialog-body modal-footer">
+        <button
+          class="btn btn-link"
+          type="button"
+          (click)="close('close')"
+        >
+          {{ 'achAccountModal.cancelButton' | cxTranslate }}
+        </button>
+        <button
+          class="btn btn-primary"
+          type="submit"
+        >
+          {{ 'achAccountModal.submitButton' | cxTranslate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'styles-config';
+@import '@spartacus/styles/index';
+
+app-express-cart-totals {
+  @extend %cx-cart-totals !optional;
+}
+
+lib-checkout-com-express-googlepay .gpay-card-info-container {
+  height: 48px;
+  width: 100%;
+}

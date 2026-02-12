@@ -1,0 +1,13 @@
+<div class="mb-4">
+  <lib-checkout-com-billing-address-form
+    [billingAddressForm]="billingAddressForm"
+  ></lib-checkout-com-billing-address-form>
+</div>
+
+<div
+  [class]="(showBillingAddressForm$ | async ) === true ? 'd-none' : ''"
+  class="cx-checkout-btns row">
+  <div class="col-sm-12 col-md-6 offset-md-6 text-md-right mb-4">
+    <div #gpayBtn></div>
+  </div>
+</div>

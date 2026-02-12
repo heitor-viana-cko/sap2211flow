@@ -1,0 +1,59 @@
+<ng-container *ngIf="paymentMethods$ | async as paymentMethods">
+  <ng-container *ngIf="showEditAddressForm !== true; else showPaymentForm">
+    <div class="cx-payment container">
+      <div class="cx-header">
+        <h3>{{ 'paymentMethods.paymentMethods' | cxTranslate }}</h3>
+      </div>
+
+      <div class="cx-body">
+        <div class="cx-msg">
+          {{
+          'paymentMethods.newPaymentMethodsAreAddedDuringCheckout' | cxTranslate
+          }}
+        </div>
+        <div *ngIf="loading$ | async; else cards">
+          <cx-spinner></cx-spinner>
+        </div>
+        <ng-template #cards>
+          <div
+            role="status"
+            [attr.aria-label]="'common.loaded' | cxTranslate"
+          ></div>
+          <div class="cx-existing row">
+            <div
+              class="cx-payment-card col-sm-12 col-md-12 col-lg-6"
+              *ngFor="let paymentMethod of paymentMethods; let i = index"
+            >
+              <div class="cx-payment-inner">
+                <cx-card
+                  [index]="i"
+                  [border]="true"
+                  [fitToContainer]="true"
+                  [content]="getCardContent(paymentMethod) | async"
+                  (deleteCard)="setEditPaymentMethod(paymentMethod)"
+                  (setDefaultCard)="setDefaultPaymentMethod(paymentMethod)"
+                  (editCard)="editPaymentMethodButtonHandle(paymentMethod)"
+                  [editMode]="editCard === paymentMethod.id"
+                  (cancelCard)="cancelCard()"
+                ></cx-card>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #showPaymentForm>
+    <section>
+      <y-checkout-com-payment-form
+        (setPaymentDetails)="setPaymentDetails($event)"
+        (closeForm)="hidePaymentForm()"
+        (goBack)="hidePaymentForm()"
+        [paymentMethodsCount]="paymentMethods.length"
+        [paymentDetailsData]="selectedPaymentMethod"
+      ></y-checkout-com-payment-form>
+    </section>
+  </ng-template>
+
+</ng-container>

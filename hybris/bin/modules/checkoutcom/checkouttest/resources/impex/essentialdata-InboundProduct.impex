@@ -1,0 +1,18 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundProduct     ; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code)     ; root[default = false]; itemTypeMatch(code)
+                                   ; InboundProduct                        ; Product            ; Product        ; true                 ; ALL_SUB_AND_SUPER_TYPES ;
+                                   ; InboundProduct                        ; Catalog            ; Catalog        ;                      ; ALL_SUB_AND_SUPER_TYPES ;
+                                   ; InboundProduct                        ; CatalogVersion     ; CatalogVersion ;                      ; ALL_SUB_AND_SUPER_TYPES ;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundProduct:Product                                             ; code                        ; Product:code                                       ;                                                           ; true                   ;
+                                            ; InboundProduct:Product                                             ; name                        ; Product:name                                       ;                                                           ;                        ;
+                                            ; InboundProduct:Product                                             ; catalogVersion              ; Product:catalogVersion                             ; InboundProduct:CatalogVersion                             ; true                   ;
+                                            ; InboundProduct:Catalog                                             ; id                          ; Catalog:id                                         ;                                                           ; true                   ;
+                                            ; InboundProduct:CatalogVersion                                      ; catalog                     ; CatalogVersion:catalog                             ; InboundProduct:Catalog                                    ; true                   ;
+                                            ; InboundProduct:CatalogVersion                                      ; version                     ; CatalogVersion:version                             ;                                                           ; true                   ;
+
+INSERT_UPDATE InboundChannelConfiguration; integrationObject(code)[unique = true]; authenticationType(code)
+                                         ; InboundProduct                        ; BASIC

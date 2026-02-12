@@ -1,0 +1,48 @@
+<div class="mb-4">
+  <lib-checkout-com-billing-address-form
+    [billingAddressForm]="billingAddressForm"
+  ></lib-checkout-com-billing-address-form>
+</div>
+
+<ng-container *ngIf="(showBillingAddressForm$ | async) !== true && (achEnabled$ | async) as enable">
+  <div class="col-sm-12 col-md-6 offset-md-6 text-md-right mb-4">
+    <div class="form-group">
+      <div class="form-check">
+        <label>
+          <input
+            type="checkbox"
+            class="form-check-input ach-consent"
+            [checked]="false"
+            (change)="continueButtonDisabled($event.target)"
+            [formControl]="customerConsents"
+            id="customerConsent"
+          />
+          <span class="form-check-label">
+            {{ 'paymentForm.achConsents.checkbox' | cxTranslate }}
+            <span
+              class="link-consents"
+              id="popup-consent"
+              (click)="showPopUpConsents()"
+            >
+              {{ 'paymentForm.achConsents.popUpTitle' | cxTranslate }}
+            </span>
+          </span>
+        </label>
+      </div>
+    </div>
+    <button
+      data-test-id="ach-plaid-open-btn"
+      class="btn btn-block btn-primary"
+      [disabled]="disabled"
+      (click)="showACHPopUpPayment()"
+    >
+      {{ 'common.continue' | cxTranslate }}
+    </button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="showLoadingIcon$ | async">
+  <div class="cx-spinner">
+    <cx-spinner class="overlay"></cx-spinner>
+  </div>
+</ng-container>

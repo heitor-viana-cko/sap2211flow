@@ -1,0 +1,98 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#% impex.setLocale( Locale.GERMAN );
+
+$productCatalog = electronicsProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default='$productCatalog:Staged']
+$prices = Europe1prices[translator=de.hybris.platform.europe1.jalo.impex.Europe1PricesTranslator]
+$taxGroup = Europe1PriceFactory_PTG(code)[default=jp-vat-full]
+
+# Set product approval status to Approved only for those products that have prices.
+$approved = approvalstatus(code)[default='approved']
+INSERT_UPDATE PriceRow; productId[unique = true]; unit(code[unique = true, default = pieces]); currency(isocode)[unique = true]; price   ; minqtd; unitFactor; net
+                      ; 1981415                 ; pieces                                     ; GBP                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; EUR                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; JPY                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; BRL                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; AUD                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; NZD                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; BHD                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; KWD                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; QAR                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; EGP                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; PLN                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; MXN                             ; 212,26  ; 1     ; 1         ; false
+                      ; 1981415                 ; pieces                                     ; USD                             ; 212,26  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; GBP                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; EUR                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; JPY                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; BRL                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; AUD                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; NZD                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; BHD                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; KWD                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; QAR                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; EGP                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; PLN                             ; 114,12  ; 1     ; 1         ; false
+                      ; 300938                  ; pieces                                     ; MXN                             ; 114,12  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; GBP                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; EUR                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; JPY                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; BRL                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; AUD                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; NZD                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; BHD                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; KWD                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; QAR                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; EGP                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; PLN                             ; 260,87  ; 1     ; 1         ; false
+                      ; 816802                  ; pieces                                     ; MXN                             ; 260,87  ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; GBP                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; EUR                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; JPY                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; BRL                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; AUD                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; NZD                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; BHD                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; KWD                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; QAR                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; EGP                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; PLN                             ; 11      ; 1     ; 1         ; false
+                      ; 2278102                 ; pieces                                     ; MXN                             ; 11      ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; GBP                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; EUR                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; JPY                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; BRL                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; AUD                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; NZD                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; BHD                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; KWD                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; QAR                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; EGP                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; PLN                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 855246                  ; pieces                                     ; MXN                             ; 1022,51 ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; GBP                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; EUR                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; JPY                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; BRL                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; AUD                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; NZD                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; BHD                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; KWD                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; QAR                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; EGP                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; PLN                             ; 34,53   ; 1     ; 1         ; false
+                      ; 458542                  ; pieces                                     ; MXN                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; GBP                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; EUR                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; JPY                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; BRL                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; AUD                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; NZD                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; BHD                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; KWD                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; QAR                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; EGP                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; PLN                             ; 86,37   ; 1     ; 1         ; false
+                      ; 479742                  ; pieces                                     ; MXN                             ; 86,37   ; 1     ; 1         ; false

@@ -1,0 +1,9 @@
+$styleVersion: 2211 !default;
+
+@import '@angular/cdk/overlay-prebuilt.css';
+@import "@spartacus/styles/scss/features";
+@import "@spartacus/styles/scss/mixins";
+@import "@spartacus/styles/scss/page-template";
+@import "@spartacus/checkout";
+@import "@spartacus/cart";
+@import "@spartacus/order";

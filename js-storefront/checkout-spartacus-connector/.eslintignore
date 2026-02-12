@@ -1,0 +1,7 @@
+node_modules/*
+*.spec.ts
+*.mock.ts
+/package-lock.json
+/yarn.lock
+/projects/checkout-spartacus-translations/node_modules/*
+/projects/checkout-spartacus-connector/generated/*

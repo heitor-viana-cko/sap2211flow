@@ -1,0 +1,155 @@
+%y-checkout-com-payment-methods {
+  .cx-payment {
+    @include media-breakpoint-down(sm) {
+      padding-inline: 1.25rem 1.25rem;
+    }
+  }
+
+  .cx-header {
+    padding: 2.5rem 0 0;
+  }
+
+  .cx-card-img-container {
+    .fab,
+    .fas {
+      &::before {
+        font-size: var(--cx-font-size, 48px);
+      }
+    }
+  }
+
+  .cx-existing {
+    padding: 0 0 2.5rem;
+    display: flex;
+    align-items: stretch;
+
+    @include media-breakpoint-down(md) {
+      padding: 0 0 3.125rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding: 0 0 4.375rem;
+    }
+  }
+
+  .cx-payment-card {
+    padding-top: 1.875rem;
+  }
+
+  .cx-payment-inner {
+    height: 100%;
+  }
+}
+
+%lib-checkout-com-payment-method {
+  @include checkout-media-style();
+
+  margin-bottom: 30px;
+  margin-top: 32px;
+  padding-top: 1.875rem;
+  border: 1px solid var(--cx-color-medium);
+  border-radius: 10px;
+  padding-inline: 1.875rem 1.875rem;
+
+  @include media-breakpoint-down(md) {
+    background-color: var(--cx-color-transparent);
+  }
+
+  .cx-payment {
+    &.container {
+      padding: 0;
+    }
+  }
+
+  .cx-payment-card {
+    margin-bottom: 0.625rem;
+    padding-bottom: 0.625rem;
+    padding-inline: 0 0;
+
+    @include media-breakpoint-up(lg) {
+      &:nth-child(odd) {
+        padding-inline-end: 15px;
+      }
+
+      &:nth-child(even) {
+        padding-inline-start: 15px;
+      }
+    }
+  }
+
+  .cx-payment-card-inner {
+    height: 100%;
+    background-color: var(--cx-color-inverse);
+    cursor: pointer;
+
+    @include media-breakpoint-down(md) {
+      background-color: var(--cx-color-inverse);
+    }
+  }
+
+  .cx-card-img-container {
+    .fab,
+    .fas {
+      &::before {
+        font-size: var(--cx-font-size, 48px);
+      }
+    }
+  }
+
+  .cx-checkout-text {
+    @include media-breakpoint-down(md) {
+      padding-inline-start: 0;
+    }
+  }
+
+  .cx-checkout-btns {
+    padding-bottom: 1rem;
+
+    @include media-breakpoint-down(md) {
+      padding: 1.25rem 0;
+    }
+
+    .btn-secondary {
+      @include media-breakpoint-down(md) {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .cx-checkout-btns-top {
+    display: flex;
+    justify-content: flex-end;
+    padding-inline-start: 1.875rem;
+
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+
+    .btn {
+      width: 50%;
+    }
+  }
+
+  .cx-checkout-btns-bottom {
+    padding-bottom: 0;
+
+    @include media-breakpoint-up(lg) {
+      display: none;
+    }
+
+    .btn-secondary {
+      margin-bottom: 0;
+    }
+  }
+
+  .cx-checkout-body {
+    display: flex;
+    align-items: stretch;
+
+    &.row {
+      @include media-breakpoint-down(md) {
+        padding: 0;
+      }
+    }
+  }
+}

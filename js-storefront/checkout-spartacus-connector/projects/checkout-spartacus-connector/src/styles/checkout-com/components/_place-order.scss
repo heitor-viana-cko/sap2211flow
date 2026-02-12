@@ -1,0 +1,32 @@
+lib-checkout-com-place-order {
+  @include media-breakpoint-down(lg) {
+    --cx-flex-basis: 45%;
+  }
+
+  .scaled-input {
+    transform: scale(0.7);
+  }
+
+  .cx-place-order-form {
+    padding: 0;
+    font-size: 12px;
+
+    .form-check {
+      &-input {
+        margin: 0;
+        top: 1rem;
+
+        @include media-breakpoint-down(md) {
+          top: 0.5rem;
+        }
+      }
+
+      &-label {
+        margin-bottom: 0.5rem;
+        margin-top: 0.3rem;
+        padding: 0;
+        margin-inline: 2rem 0;
+      }
+    }
+  }
+}

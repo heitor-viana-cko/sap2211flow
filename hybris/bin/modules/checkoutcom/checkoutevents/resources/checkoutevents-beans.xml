@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+    <bean class="com.checkout.hybris.events.beans.CheckoutComPaymentEventObject">
+        <property name="id" type="java.lang.String"/>
+        <property name="source" type="java.lang.String"/>
+        <property name="type" type="java.lang.String"/>
+        <property name="version" type="java.lang.String"/>
+        <property name="created_on" type="java.lang.String"/>
+        <property name="data" type="com.checkout.hybris.events.beans.CheckoutComPaymentEventDataObject"/>
+        <property name="payLoad" type="java.lang.String"/>
+    </bean>
+    <bean class="com.checkout.hybris.events.beans.CheckoutComPaymentEventDataObject">
+        <property name="id" type="java.lang.String"/>
+        <property name="action_id" type="java.lang.String"/>
+        <property name="approved" type="java.lang.Boolean"/>
+        <property name="reference" type="java.lang.String"/>
+        <property name="amount" type="java.lang.Double"/>
+        <property name="auth_code" type="java.lang.String"/>
+        <property name="currency" type="java.lang.String"/>
+        <property name="metadata" type="com.checkout.hybris.events.beans.CheckoutComPaymentEventMetadataObject"/>
+        <property name="payment_type" type="java.lang.String"/>
+        <property name="processed_on" type="java.lang.String"/>
+        <property name="response_code" type="java.lang.String"/>
+        <property name="status" type="java.lang.String"/>
+        <property name="response_summary" type="java.lang.String"/>
+        <property name="risk" type="com.checkout.hybris.events.beans.CheckoutComPaymentEventRiskObject"/>
+        <property name="scheme_id" type="java.lang.String"/>
+        <property name="source" type="com.checkout.hybris.events.beans.CheckoutComPaymentEventSourceObject"/>
+        <property name="customer" type="com.checkout.hybris.events.beans.CheckoutComPaymentEventCustomerObject"/>
+        <property name="balances" type="com.checkout.hybris.events.beans.CheckoutComPaymentEventBalancesObject"/>
+    </bean>
+    <bean class="com.checkout.hybris.events.beans.CheckoutComPaymentEventMetadataObject">
+        <property name="site_id" type="java.lang.String"/>
+        <property name="udf5" type="java.lang.String"/>
+    </bean>
+    <bean class="com.checkout.hybris.events.beans.CheckoutComPaymentEventRiskObject">
+        <property name="flagged" type="java.lang.Boolean"/>
+        <property name="score" type="java.lang.Double"/>
+    </bean>
+    <bean class="com.checkout.hybris.events.beans.CheckoutComPaymentEventSourceObject">
+        <property name="type" type="java.lang.String"/>
+        <property name="id" type="java.lang.String"/>
+    </bean>
+    <bean class="com.checkout.hybris.events.beans.CheckoutComPaymentEventCustomerObject">
+        <property name="id" type="java.lang.String"/>
+        <property name="email" type="java.lang.String"/>
+    </bean>
+    <bean class="com.checkout.hybris.events.beans.CheckoutComPaymentEventBalancesObject">
+        <property name="total_authorized" type="java.lang.Double"/>
+        <property name="total_voided" type="java.lang.Double"/>
+        <property name="available_to_void" type="java.lang.Double"/>
+        <property name="total_captured" type="java.lang.Double"/>
+        <property name="available_to_capture" type="java.lang.Double"/>
+        <property name="total_refunded" type="java.lang.Double"/>
+        <property name="available_to_refund" type="java.lang.Double"/>
+    </bean>
+</beans>
