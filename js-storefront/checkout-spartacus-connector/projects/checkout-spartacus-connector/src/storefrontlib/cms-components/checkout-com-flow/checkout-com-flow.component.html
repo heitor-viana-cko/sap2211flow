@@ -1,7 +1,7 @@
 <cx-spinner *ngIf="isLoading$ | async"></cx-spinner>
-<form >
-  <div class="container" >
-    <div id="flow-container" style="min-width: 800px; min-height: 800px"></div>
+<form [hidden]="(isLoading$ | async)">
+  <div class="container">
+    <div id="flow-container"></div>
   </div>
   <span id="error-message"></span>
   <span id="successful-payment-message"></span>

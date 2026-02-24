@@ -4,7 +4,7 @@ import { CheckoutComFlowComponentInterface } from '@checkout-core/interfaces';
 import { CheckoutComFlowFacade } from '@checkout-facades/checkout-com-flow.facade';
 import { CheckoutWebComponents, Options } from '@checkout.com/checkout-web-components';
 import { GlobalMessageService, GlobalMessageType, HttpErrorModel, LanguageService, LoggerService, WindowRef } from '@spartacus/core';
-import { Observable,timer } from 'rxjs';
+import { Observable } from 'rxjs';
 import { filter, switchMap, take, tap } from 'rxjs/operators';
 
 @Component({
@@ -37,6 +37,7 @@ export class CheckoutComFlowComponent implements OnInit, AfterViewInit, OnDestro
    */
   ngOnInit(): void {
     this.initializeFlowObservables();
+    this.listenForFlowEnabled();
   }
 
   /**
@@ -45,16 +46,7 @@ export class CheckoutComFlowComponent implements OnInit, AfterViewInit, OnDestro
    * @since 2211.32.1
    */
   ngAfterViewInit(): void {
-    this.waitForDomAndMount();
     this.checkoutComFlowFacade.initializeFlow();
-  }
-
-  private waitForDomAndMount(): void {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        this.listenForFlowEnabled();
-      });
-    });
   }
 
   /**
@@ -171,35 +163,25 @@ export class CheckoutComFlowComponent implements OnInit, AfterViewInit, OnDestro
    * @since 2211.32.1
    */
   protected mountFlowComponent(): void {
-    if (this.windowRef.isBrowser()) {
-      const container: HTMLElement = document.getElementById('flow-container');
+    if (!this.windowRef.isBrowser()) {
+      return;
+    }
 
-      if (!container) {
-        this.loggerService.error('Flow container not found in DOM');
-        this.handleWebComponentsError({ message: 'Payment container not found' });
-        return;
-      }
-          const check = () => {
-            const rect = container.getBoundingClientRect();
-            const style = window.getComputedStyle(container);
+    const container: HTMLElement = document.getElementById('flow-container');
 
-            console.log("width: " + rect.width)
-            console.log("height: " + rect.height)
-            console.log("display: " + style.display)
-            console.log("visibility: " + style.visibility)
-      };
-      check();
+    if (!container) {
+      this.loggerService.error('Flow container not found in DOM');
+      this.handleWebComponentsError({ message: 'Payment container not found' });
+      return;
+    }
 
-
-        this.flowComponent = this.checkoutInstance.create('flow', {
-              onReady: () => console.log('✅ Flow ready (onReady)'),
-              onError: (_self, error) => console.error('❌ Flow Error:', error),
-              onChange: (state) => console.log('🔄 Flow change:', state)
-            });
-        this.flowComponent.mount(container);
-        console.log('✅ Flow mount called')
-        this.cd.detectChanges();
-
+    try {
+      this.flowComponent = this.checkoutInstance.create('flow');
+      this.flowComponent.mount(container);
+      this.cd.detectChanges();
+    } catch (error) {
+      this.loggerService.error('Error mounting flow component', error);
+      this.handleWebComponentsError({ message: 'Error mounting payment component' });
     }
   }
 }

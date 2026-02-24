@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CmsConfig, I18nModule, provideConfig, UrlModule } from '@spartacus/core';
 import { CheckoutComPlaceOrderComponent } from './checkout-com-place-order.component';
-import {CheckoutComFlowModule} from "@checkout-components/checkout-com-flow/checkout-com-flow.module";
 
 @NgModule({
   declarations: [CheckoutComPlaceOrderComponent],
@@ -13,8 +12,7 @@ import {CheckoutComFlowModule} from "@checkout-components/checkout-com-flow/chec
     RouterModule,
     UrlModule,
     I18nModule,
-    ReactiveFormsModule ,
-CheckoutComFlowModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideConfig({
